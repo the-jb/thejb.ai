@@ -64,7 +64,7 @@ Attention 함수 중에서는 `compatibility function` 으로 일반적으로 ad
 
 Q, K에 대한 `dimension`을 d<sub>k</sub>, V에 대한 `dimension` 을 d<sub>v</sub>라고 했을 때, dot-product attention 을 수행한 결과를 scaling factor ( 1/sqrt(d<sub>k</sub>) ) 로 나눠준 결과에 softmax 를 적용한 값이 바로 value의 가중치가 된다. 각 value 에 대해서 이 가중치만큼 곱한 결과가 바로 attention 값이 된다. 이를 식으로 표현하면 다음과 같다.
 
-Attention(Q, K, V) = softmax(Q * K^T / sqrt(d_k)) * V (T: 행렬 전치)
+> Attention(Q, K, V) = softmax(Q * K^T / sqrt(d_k)) * V (T: 행렬 전치)
 
 Dot-product attention 은 addictive attention 보다 빠르고 효과적으로 학습할 수 있다. 대신 addictive attention 은 d<sub>k</sub>값이 큰 경우에도 효과적인 반면, dot-product attention 은 d<sub>k</sub>값이 커질 경우 결과값이 급격하게 증가할 수 있다. 그렇기 때문에 이 논문에서는 dot-product attention 에 scaling factor를 적용하여 이러한 현상을 방지하고자 한 것이다.
 
@@ -72,9 +72,8 @@ Dot-product attention 은 addictive attention 보다 빠르고 효과적으로 �
 
 `d_model` 차원의 Q, K, V 단일 attention 함수를 사용하는 대신에 이 논문에서는 Q, K, V 를 선형으로 투사를 h번 하여 이를 학습시키는 것이 효과적이라는 것을 발견했다. 각 Q, K, V 는 d<sub>k</sub>, d<sub>k</sub>, d<sub>v</sub> 의 차원으로 투사된다. 투사된 결과에 d<sub>v</sub>의 output value 가 나오도록 평행해서 차례대로 attention 을 수행한다. 이 결과들을 전부 concat 하여 선형 투사를 하면 최종 결과를 얻을 수 있다. 여러개의 평행한 attention 결과들을 합쳐서 한번에 학습시키기 때문에 이를 **multi-head attention** 이라 부른다. 이를 식으로 표현하면 다음과 같다.
 
-MultiHead(Q, K, V) = concat(`head_1`, head_2, ... `head_h`) * W_O
-
-`head_i` = Attention(Q * WQ_i, K * WK_i, V * WV_i)
+> MultiHead(Q, K, V) = concat(`head_1`, head_2, ... `head_h`) * W_O
+> `head_i` = Attention(Q * WQ_i, K * WK_i, V * WV_i)
 
 여기서 head_i 는 위의 scaled dot-product attention 의 Attention(Q, K, V) 함수를 사용한 결과값을 말한다. 이 논문에서는 `h = 8`개의 평행 attention 레이어를 쌓았고, 각각의 차원 d<sub>k</sub>=d<sub>v</sub>=`d_model / h`=64 를 기본으로 하였다.
 
@@ -110,7 +109,7 @@ self-attention 이란, 말 그대로 자기 자신이 input인 동시에 output�
 
 각각의 인코더와 디코더 `sub-layer` 는 attention과 더불어 fully connected feed-forward network 도 포함하고 있다. 이 네트워크는 각각의 position 에 개별적으로 동일하게 적용된다. 레이어는 다음과 같은 두개의 선형 함수와 ReLU로 표현된다.
 
-FFN(x) = ReLU(x * W_1 + b_1) * W_2 + b2
+> FFN(x) = ReLU(x * W_1 + b_1) * W_2 + b2
 
 다른 포지션에서도 linear transformation 이 동일하게 발생하지만, 레이어마다 다른 파라매터를 사용한다. input과 output 의 convolutional 커널 사이즈는 `d_model`이고, inner layer 는 `d_ff = 2048`이다.
 
@@ -122,9 +121,8 @@ FFN(x) = ReLU(x * W_1 + b_1) * W_2 + b2
 
 이 모델에서는 RNN이나 Convolution 이 전혀 없기 때문에 모든 입력이 동시에 들어와서 문장에서 토큰의 순서에 대해 전혀 알 수가 없다. 그렇기 때문에 위치에 대해 추가적인 정보 전달이 필요했고, 이 것이 바로 **Positional Encoding**이다. 이 논문에서는 positional encoding 을 `encoder stack`과 `decoder stack`의 시작부분에서 input embedding 에 추가시켰다. 이를 식으로 표현하면 다음과 같다.
 
-PE(pos, 2i) = sin(pos / 10000^(2i / `d_model`))
-
-PE(pos, 2i+1) = cos(pos / 10000^(2i / `d_model`))
+> PE(pos, 2i) = sin(pos / 10000^(2i / `d_model`))
+> PE(pos, 2i+1) = cos(pos / 10000^(2i / `d_model`))
 
 여기서 pos는 해당 토큰의 절대 position을 나타내고 2i, 2i+1 은 encoding 결과 matrix에서 해당 차원을 나타낸다. 이렇게 positional encoding 을 하게 되면 결과의 각 차원은 sin파(sinusoid)[^4]가 되며, 파장이 차원마다 2π ~ 20000π 까지 증가하는 형태가 된다.
 
