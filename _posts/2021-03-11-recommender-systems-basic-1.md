@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Recommender Systems의 기초 (1)
-tags: [recommender system]
+tags: [recommender system, basic knowledge]
 ---
 
 # 참고 논문 및 자료
