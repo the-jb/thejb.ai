@@ -11,7 +11,7 @@ tags: [recommender system]
 # Recommendation Problem
 
 ## 1. Recommandation Problem 이란?
-추천 시스템은 **Collaborative Filtering** 을 필두로 하여 연구가 본격화되고, 다양한 분야에서 다양한 형태로 사용되고 발전하고 있다. 추천 시스템을  **Recommandation Problem**으로 정의하고 이 문제를 해결해 나가는 방식에 대해 다룬다.
+고전 추천 시스템은 **Collaborative Filtering** 을 필두로 하여 연구가 본격화되고, 다양한 분야에서 다양한 형태로 사용되고 발전하고 있다. 추천 시스템을  **Recommandation Problem**으로 정의하고 이 문제를 해결해 나가는 방식에 대해 다룬다.
 
 - 가장 일반적으로 Recommendation Problem 은 아이템에 대한 유저의 `rating`을 추정하는 것이라고 할 수 있다.
 - 이 `rating` 을 추정하는데 가장 쉽게 떠올릴 수 있는 데이터는
@@ -309,3 +309,65 @@ Collaborative 추천 방식으로 Content-based 추천방식의 문제점들을 
    - 결손값을 구하기 위해 행렬을 이용하는 방법 (대표적으로 matrix factorization)
 
 [^3]: 임계 질량. 어떤 일이 발생하기 위한 최소한의 크기. 여기서는 추천시스템이 제대로 동작하기 위한 유저수 정도의 뜻으로 이해하면 된다.
+
+# Hybrid Methods
+
+Content-based 방식과 collaborative 방식 모두 다른 한계점이 있었다. 그래서 hybrid 방식은 이 두 방식을 혼합하여 그 한계점을 극복하려는 접근 방법이다.
+
+이 둘을 혼합하는 방법은 크게 다음과 같이 분류할 수 있다.
+
+1. content-based 와 collaborative 방식을 각각 구현하여, 각각의 결과물들을 합쳐서 보여주는 방법
+2. content-based 방식의 일부 특성을 따서 collaborative 방식에 적용
+3. collaborative 방식의 일부 특성을 따서 content-based 방식에 적용
+4. content-based 와 collaborative 의 특성을 딴 새로운 모델을 설계
+
+각각의 방법들에 대해 아래에서 설명하도록 한다.
+
+## 1. 두 방식을 각각 구현
+
+Content-based 와 collaborative 추천을 각각 구현하는 방식이다.
+
+각 구현을 통한 추천 결과들을 합하여 순서대로 보여준다. 아니면, 순서대로 보여주는 대신에 두가지의 추천 결과 중 하나를 선택해서 보여주는 방법도 있다. 해당 상황에 따라서 각 추천방식의 quality를 측정하고, quality 가 더 높은 추천 결과를 보여주는 것이다. 이 quality 를 해당 상황의 기존 추천 결과를 통해서 학습할 수 있다.
+
+## 2. Collaborative 기반에 content-based 의 특성 적용
+
+기존의 collaborative 추천 방식에 content-based의 일부 특성들을 적용하는 방식이다. 
+
+첫 번째로 "collaboration via content" 방식이 있다. 기존의 collaborative 추천에 각 유저의 content-based profile 을 추가로 관리하는 방식이다. 이 content-based profile 은 유저간의 유사도를 비교하는 데 활용할 수 있다. 이러한 방식은 앞에 collaborative 추천방식에서 지적되었던 sparsity 문제를 좀 더 극복할 수 있다. 실제로 유저들 끼리 공통된 아이템을 갖는 경우가 드물기 때문에, 공통된 아이템을 통해 유사도를 구하는 대신에 각 유저의 content-based profile 을 이용해서 공통된 아이템이 없는 유저들도 유사도를 더 잘 찾을 수 있다. 다른 장점으로는, 비슷한 유저가 좋은 평가를 준 아이템 뿐만 아니라 유저와 profile 이 다른 경우에도 추천받을 수 있다는 점이 있다.
+
+또 다른 방식으로, 여러개의 서로 다른 filterbots 를 이용하는 방법이 있다. 여기서 filterbot 이란 content-based 방식의 에이전트라고 생각하면 된다. 각 filterbot 에이전트가 collaborative 의 한 유저로서 추천 시스템에 참가하게 된다. 예를 들어 특정 카테고리의 물건을 좋아하는 filterbot 이 있다면, 그 filterbot 과 유사한 성향의 유저가 있다면 filterbot 의 선택으로부터 추천을 받게 된다. 결과적으로 자연스럽게 collaborative 와 content-based 방식 중 유저에게 더 맞는 추천을 고르는 식이 된다.
+
+이 외에 유저의 rating 값들을 content-based 방식을 통해 다른 아이템들에게로 확장 적용하는 방법 등이 있다.
+
+## 3. Content-based 기반에 collaborative 의 특성 적용
+
+2와 반대로 content-based 를 기반으로 collaborative 의 특성을 일부 적용하는 방식이다.
+
+대표적으로 dimensionality reduction 방법이 있다. 이는 content 분석을 할 때, 각각의 유저가 아닌 어떤 그룹의 content-based profile 을 만드는 것이다.
+
+## 4. 새로운 모델 설계
+
+기존의 추천방식을 기반으로 하지 않고, 새로운 모델을 설계하면서 content-based 와 collaborative 방식의 일부 특성들을 적용하는 방법이다.
+
+여러 방식들 중 통계 모델인 Markov chain Monte Carlo 를 이용한 예측 방식이 있다. 이는 쉽게 설명해서, 이전 샘플을 통해 다음 샘플을 예측하는 모델이라고 생각하면 된다. 이에 대한 식은 다음과 같다.
+
+$$
+\text{$r_{ij}$를 유저 $i$에 대한 아이템 $j$의 rating이라고 하면,}\\
+r_{ij}=x_{ij}\mu+z_i\gamma_j+w_j\lambda_i+e_{ij}\\
+e_{ij} \sim N(0,\sigma^2),\lambda_i \sim N(0,\Lambda),\gamma_j \sim N(0,\Gamma)
+$$
+
+여기서 $e_{ij}$, $\lambda_i$, $\gamma_j$는 해당 정규분포를 따르는 랜덤 노이즈를 추가한 것이다. $x_{ij}$는 유저와 아이템 특성을 담고있는 행렬이고, $z_i$는 유저에 대한 특성, $w_j$는 아이템에 대한 특성이다. 결국 위 식에서 $\mu$, $\sigma$, $\Lambda$, $\Gamma$ 파라매터들의 값을 구해야 하는데, 이 값들을 기존 데이터를 Markov chain Monte Carlo 방식을 활용해서 구하는 것이다. 결국 여기에서 $w_j$가 item profile을 나타내고, $z_i$가 user profile을 나타내어 content-based 와 collaborative 의 특성을 활용한다고 말할 수 있다.
+
+다른 hybrid 방법으로 knowledge-based 기법이 있는데, 이는 기존에 알고있는 해당 분야의 지식을 직접 주입해서 content-based, collaborative 의 한계점들을 보완하여 추천이 이루어지게 하는 방식이다. 이러한 방식들은 일단 도메인에 대한 이해도와 그에 맞는 설계가 있어야 한다.
+
+# 정리
+
+고전 추천 시스템을 분류하는 방법은 크게 2가지가 있었다.
+
+1. content-based, collaborative, hybrid 중 어떤 방식으로 추천이 이루어지는지에 따라 구분
+
+2. heuristic-based, model-based 중 어떤 방식으로 rating 을 추정하는지에 따라 구분
+
+또한 이러한 추천방식들은 각각 한계점들이 있었고, 실제 생활의 추천을 위해서는 더 복잡한 요인들이 얽혀 있기 때문에, 이러한 추천 방식들을 확장해 나가야 한다. 확장하는 방법에 대해서는 다음 글에 이어 작성하도록 한다.
+
