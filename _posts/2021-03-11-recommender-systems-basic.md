@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Recommender Systems의 기초 (1)
+title: Recommender Systems의 기초
 tags: [recommender system, basic knowledge]
 ---
 
@@ -11,12 +11,13 @@ tags: [recommender system, basic knowledge]
 # Recommendation Problem
 
 ## 1. Recommandation Problem 이란?
-고전 추천 시스템은 **Collaborative Filtering** 을 필두로 하여 연구가 본격화되고, 다양한 분야에서 다양한 형태로 사용되고 발전하고 있다. 추천 시스템을  **Recommandation Problem**으로 정의하고 이 문제를 해결해 나가는 방식에 대해 다룬다.
+고전 추천 시스템은 **Collaborative Filtering** 을 필두로 하여 연구가 본격화되면서 발전하였다. 추천 시스템을  **Recommandation Problem**으로 정의하고 이 문제를 해결해 나가는 방식에 대해 다룬다.
 
-- 가장 일반적으로 Recommendation Problem 은 아이템에 대한 유저의 `rating`을 추정하는 것이라고 할 수 있다.
-- 이 `rating` 을 추정하는데 가장 쉽게 떠올릴 수 있는 데이터는
-  1. 그 유저의 다른 아이템에 대한 `rating`값
-  2. 다른 유저의 그 아이템에 대한 `rating`값이다.
+가장 일반적으로 Recommendation Problem 은 아이템에 대한 유저의 `rating`을 추정하는 것이라고 할 수 있다.
+
+이 `rating` 을 추정하는데 필요한 가장 쉽게 떠올릴 수 있는 데이터는
+1. 그 유저의 다른 아이템에 대한 `rating`값
+2. 다른 유저의 그 아이템에 대한 `rating`값이다.
 
 ## 2. 수식을 통해 Recommandation Problem 구체화
 Recommendation Problem 을 식으로 구체화하여 정의하면 다음과 같다.
@@ -115,21 +116,21 @@ $$
 
 ## Content-based Profile
 
-**TF-IDF** 로 item 의 유사 contents 를 구할 수 있었다. 이것을 바탕으로 **Content-based Profile** 을 구할 수 있다.
+**TF-IDF** 로 item 의 유사 contents 를 구할 수 있었다. 이것을 바탕으로 **Content-based Profile** 을 구할 수 있다. **Content-based Profile** 은 유저의 취향 정보를 담고있는 `profile`이다. 이 `profile`은 이전에 유저가 경험하고 `rating`을 매겼던 아이템을 바탕으로 작성된다. 
 
-- **Content-based Profile** 은 유저의 취향 정보를 담고있는 `profile`이다. 이 `profile`은 이전에 유저가 경험하고 `rating`을 매겼던 아이템을 바탕으로 작성된다. 
-- **TF-IDF** 를 이용한 $ContentBasedProfile$의 식은 다음과 같다.
+**TF-IDF** 를 이용한 $ContentBasedProfile$의 식은 다음과 같다.
 
-  $$
-  ContentsBasedProfile(c) = (w_{c1}, w_{c2}, ... w_{ck})\\
-  \text{($w_k$ : 각 keyword가 유저c에게 중요한 정도의 weight 값)}
-  $$
-- 위 식을 이용해 다음과 같은 방법들로 rate 를 계산할 수 있다.
-  - Rocchio 알고리즘으로 average 값을 구하는 방법이 있다.
-  - Bayesian classifier 를 통해 해당 document 의 확률을 추측할 수 있다.
-  - Winnow 알고리즘도 feature 가 많을 경우 효과적으로 사용할 수 있다.
+$$
+ContentsBasedProfile(c) = (w_{c1}, w_{c2}, ... w_{ck})\\
+\text{($w_k$ : 각 keyword가 유저c에게 중요한 정도의 weight 값)}
+$$
 
-이 $ContentBasedProfile(c)$ 를 통해 $u(c, s)$를 다음과 같이 정의할 수 있다.
+위 식을 이용해 다음과 같은 방법들로 rate 를 계산할 수 있다.
+- Rocchio 알고리즘으로 average 값을 구하는 방법이 있다.
+- Bayesian classifier 를 통해 해당 document 의 확률을 추측할 수 있다.
+- Winnow 알고리즘도 feature 가 많을 경우 효과적으로 사용할 수 있다.
+
+따라서 이 $ContentBasedProfile(c)$ 를 통해 $u(c, s)$를 다음과 같이 정의할 수 있다.
 
 $$
 u(c, s) = score(ContentBasedProfile(c), Content(s))
@@ -199,7 +200,7 @@ Collaborative filtering 이라고도 불리우는 Colaborative recommendation �
 
 Content-based 방식에서 $u(c, s)$를 구하기 위해 $u(c, s_i)$를 이용했다면, Collaborative filtering 은 $u(c, s)$를 구하기 위해 $u(c_j, s)$를 사용한다. 여기서 $c_j$는 c와 "비슷한" 유저를 나타낸다. 즉, collaborative 방식에서는 **유저의 취향이 유사하면, 그 아이템에 대한 평가도 유사할 것이다** 라는 생각이 기반이 되는 것이다. 그래서 Collaborative 추천 방식에서는 유저 c와 비슷한 취향의 유저인 `peer`를 찾는 것이 중요하다.
 
-Collaborative 추천 방식은 크게 **memory-based**(=휴리스틱 베이스)방식과, model-based 방식으로 나뉘어진다.
+Collaborative 추천 방식은 크게 memory-based(=휴리스틱 베이스)방식과, model-based 방식으로 나뉘어진다.
 
 ## Memory-based
 
@@ -235,9 +236,9 @@ $$
 
 ### Similarity
 
-효과적인 aggregate를 위해 두 유저 사이의 유사정도를 구하기 위한 similarity 함수가 필요하다. 기본적으로 이 함수는 두 유저가 공통적으로 `rating`을 매긴 아이템들을 통해서 측정할 수 있다.
+위에서 효과적인 aggregate를 위해 두 유저 사이의 유사정도를 구하기 위한 similarity 함수가 필요했다. 기본적으로 이 $sim$함수는 두 유저가 공통적으로 `rating`을 매긴 아이템들을 통해서 구한다.
 
-두 유저 x, y 사이의 공통 아이템들을 $s\in S_{xy}$ 라고 하면, 이 함수로 쓰일 수 있는 식의 대표적인 예는 다음과 같다.
+두 유저 $x$, $y$ 사이의 공통 아이템들을 $s\in S_{xy}$ 라고 하면, 이 함수로 쓰일 수 있는 식의 대표적인 예는 다음과 같다.
 
 1. **correlation**
    $$
@@ -249,6 +250,8 @@ $$
    $$
    sim(x,y)=\frac{\sum{r_{x,s}r_{y,s}}}{\sqrt{\sum{r_{x,s}^2}\sum{r_{y,s}^2}}}
    $$
+   
+3. 
 
 결국 1번과 2번식의 차이는 평균과의 편차를 기준으로 하냐, 아니면 절대적인 `rating`을 기준으로 하냐의 차이가 된다. 1번 식은 평균보다 많이 좋거나 많이 나쁜 항목들이 유사할 때 유사도가 높고, 2번 식은 좋은 `rating`의 아이템을 비슷하게 평가할수록 유사하다는 것을 나타낸다.
 
@@ -263,12 +266,12 @@ Memory-based 방식은 유저의 `rating`데이터를 예측 식의 매개변수
 Probabilistic approach 는 해당 모델이 확률모델로부터 추정값을 구하는 모델이라고 할 수 있다. $r_{c,s}$에 대한 기대값 $E(r_{c,s})$에 대해서 다음과 같이 식을 세울 수 있다.
 
 $$
-E(r_c,s) = \sum{i\times Pr(r_{c,s} = i | r_{c,s'})} \text{ ($s'$ : 다른 아이템들)}
+E(r_{c,s}) = \sum{i\times Pr(r_{c,s} = i | r_{c,s'})} \text{ ($s'$ : 다른 아이템들)}
 $$
 
-이 식은 결국 $r_{c,s}$가 i가 될 확률분포 $Pr$을 구하고, 이를 통해 $r_{c,s}$를 예측하는 식이다. $r_{c,s'}$는 이미 매겨진 다른 아이템이고, 이렇게 다른 아이템의 `rating` 상황이 주어졌을 때 $r_{c,s}=i$에 대한 조건부확률을 구하는 것이다.
+이 식은 결국 $r_{c,s}$가 $i$가 될 확률분포 $Pr$을 구하고, 이를 통해 기대값 $E(r_{c,s})$를 예측하는 식이다. $r_{c,s'}$는 이미 매겨진 다른 아이템이고, 이렇게 다른 아이템의 `rating` 상황이 주어졌을 때에 대한 $r_{c,s}=i$에 대한 조건부확률을 구해야 한다.
 
-결국 여기서는 이 조건부 확률분포를 구하는 확률 모델이 중요한데, 대표적으로 **cluster model** 과 **Bayesian network** 가 있다.
+이 조건부 확률분포를 구하는 확률 모델로는 대표적으로 **cluster model** 과 **Bayesian network** 가 있다.
 
 1. **Cluster model**
 
@@ -294,7 +297,7 @@ Collaborative 추천 방식으로 Content-based 추천방식의 문제점들을 
 
 3. **Sparsity(데이터 부족) 문제**
 
-   데이터에서 sparse 란 값이 매우 띄엄띄엄 들어있는 경우를 말한다. 어떤 추천 시스템이든 보통 알고있는 `rating` 정보는 전체 아이템의 개수에 비해 매우 적다. 그래서 아주 적은 정보로 좋은 예측을 하기 위한 테크닉들이 필요한 것이다. 하지만 특히 collaborative 방식에서는 이 문제가 두드러지는데, collaborative 방식은 유저의 critical mass[^3]에 의존하기 때문이다.
+   데이터에서 sparse 란 값이 매우 띄엄띄엄 들어있는 상황을 말한다. 어떤 추천 시스템이든 보통 알고있는 `rating` 정보는 전체 아이템의 개수에 비해 매우 적다. 그래서 아주 적은 정보로 좋은 예측을 하기 위한 테크닉들이 필요한 것이다. 하지만 특히 collaborative 방식에서는 이 문제가 두드러지는데, collaborative 방식은 유저의 *critical mass*[^3]에 의존하기 때문이다.
 
    예를 들어 어떤 아이템을 경험한 유저수가 매우 적다면, 그 유저들이 모두 아이템을 좋게 평가했어도 해당 아이템은 추천받기가 어렵다. 왜냐하면 그 유저들과 비슷한 취향을 가진 유저들은 해당 아이템을 써보지 않았기 때문이다. 결국 아이템이 추천받기 위해서는 `rating`에 상관없이 최소한 일정 수준 이상 규모의 유저들이 써야 하는 것이다.
 
@@ -333,7 +336,7 @@ Content-based 와 collaborative 추천을 각각 구현하는 방식이다.
 
 기존의 collaborative 추천 방식에 content-based의 일부 특성들을 적용하는 방식이다. 
 
-첫 번째로 "collaboration via content" 방식이 있다. 기존의 collaborative 추천에 각 유저의 content-based profile 을 추가로 관리하는 방식이다. 이 content-based profile 은 유저간의 유사도를 비교하는 데 활용할 수 있다. 이러한 방식은 앞에 collaborative 추천방식에서 지적되었던 sparsity 문제를 좀 더 극복할 수 있다. 실제로 유저들 끼리 공통된 아이템을 갖는 경우가 드물기 때문에, 공통된 아이템을 통해 유사도를 구하는 대신에 각 유저의 content-based profile 을 이용해서 공통된 아이템이 없는 유저들도 유사도를 더 잘 찾을 수 있다. 다른 장점으로는, 비슷한 유저가 좋은 평가를 준 아이템 뿐만 아니라 유저와 profile 이 다른 경우에도 추천받을 수 있다는 점이 있다.
+첫 번째로 "collaboration via content" 방식이 있다. 기존의 collaborative 추천에 각 유저의 content-based profile 을 추가로 관리하는 방식이다. 이 content-based profile 은 유저간의 유사도를 비교하는 데 활용할 수 있다. 이러한 방식은 앞에 collaborative 추천방식에서 지적되었던 sparsity 문제를 좀 더 극복할 수 있다. 실제로 유저들 끼리 공통된 아이템을 갖는 경우가 드물기 때문에, 공통된 아이템을 통해 유사도를 구하는 대신에 각 유저의 content-based profile 을 이용해서 공통된 아이템이 없는 유저들도 유사도를 더 잘 찾을 수 있기 때문이다. 다른 장점으로는, 비슷한 유저가 좋은 평가를 준 아이템 뿐만 아니라 유저와 profile 이 다른 경우에도 추천받을 수 있다는 점이 있다.
 
 또 다른 방식으로, 여러개의 서로 다른 filterbots 를 이용하는 방법이 있다. 여기서 filterbot 이란 content-based 방식의 에이전트라고 생각하면 된다. 각 filterbot 에이전트가 collaborative 의 한 유저로서 추천 시스템에 참가하게 된다. 예를 들어 특정 카테고리의 물건을 좋아하는 filterbot 이 있다면, 그 filterbot 과 유사한 성향의 유저가 있다면 filterbot 의 선택으로부터 추천을 받게 된다. 결과적으로 자연스럽게 collaborative 와 content-based 방식 중 유저에게 더 맞는 추천을 고르는 식이 된다.
 
@@ -369,5 +372,7 @@ $$
 
 2. heuristic-based, model-based 중 어떤 방식으로 rating 을 추정하는지에 따라 구분
 
-또한 이러한 추천방식들은 각각 한계점들이 있었고, 실제 생활의 추천을 위해서는 더 복잡한 요인들이 얽혀 있기 때문에, 이러한 추천 방식들을 확장해 나가야 한다. 확장하는 방법에 대해서는 다음 글에 이어 작성하도록 한다.
+이러한 부분들은 사실 기법이나 식 자체가 중요한게 아니라, 비슷한 아이템이나 비슷한 유저를 찾아서 `rating`을 추천하는 것이 추천시스템의 기본이라는 것을 인지하는 것이 중요하다. 결국 딥러닝이 도입되어도 이러한 근본 자체는 크게 달라지지 않았고, 그 것을 추정하는 기법이나 모델들이 발달했기 때문이다.
+
+하지만 근본적으로, **비슷한 아이템 혹은 비슷한 취향의 유저의 아이템이 꼭 나에게 필요한 것인가?** 라는 물음에는 아직 답할수가 없다고 생각한다. CB와 CF 모두 근본적인 전제 조건은 유사한 대상에 대해서 느끼는 것도 유사하다는 것이었다. 하지만 현대 사회에서 개인화가 진행될수록, 어떤 유사한 그룹으로 묶는 것보다는 각 유저만이 갖고있는 고유한 제 3의 특성들로부터 아이템을 추천하는 것들이 중요하지 않나 라는 생각이 든다.
 
