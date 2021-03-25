@@ -114,6 +114,14 @@ $$
 
 기존의 Attention 은 단순히 input 의 각 요소들이 output의 각 요소들에게 영향을 주는 정도를 계산하기 위한 용도였다. 하지만 이 논문에서는 **self-attention**이라는 기존 attention과는 또 다른 방법의 attention 활용을 적용하고 있다.
 
+#### self-attention을 사용하는 이유
+
+이 논문에서는 **self-attention**을 사용하는 이유를 설명하기 위해 **long-range dependency** 에 대해 얘기한다. 여기서 **long-range dependency** 란, 문장에서 요소들 사이의 거리가 증가함에 따른 문장의 요소들간의 의존성을 의미한다. 문장의 길이가 길어지면(즉, 요소들간의 거리가 멀어질수록) 각 요소들간의 연결이 떨어질 수밖에 없는데, 이 연결을 유지시켜주는 목적으로 **self-attention**을 사용한다고 한다.
+
+각 요소들의 연결을 path라 하면, **long-range dependency**를 위해서 이 path의 길이를 줄이는 것이 중요하다. RNN은 sequence가 순차적으로 연결되었기 때문에 $O(n)$이 필요하고, CNN은 $O(log_k(n))$가 걸리는 반면, **self-attention**을 적용하면 모든 요소가 **self-attention**을 통해서 바로 연결되기 때문에 $O(1)$이 된다.
+
+다만, 여기서 레이어의 계산 복잡도도 생각해야 한다. **self-attention**의 레이어 복잡도는 $O(n^2d)$인데, 여기서 문장의 길이 $n$이 너무 길어지면 이 복잡도가 너무 증가하여 계산량이 증가한다. 그래서 문장의 길이가 너무 긴 경우를 위한 **restricted self-attention** 방법도 언급하였다. 일정 길이 $r$만큼 구간을 나누어 **self-attention**을 적용하는 것이다. 이렇게 하면 레이어 복잡도를 $O(rnd)$로 줄일 수 있다. 대신에 path 길이는 $O(n/r)$가 된다.
+
 #### self-attention masking에 대해서
 
 사실, 결국 Transformer 는 RNN과 다르게 sequence 가 한번에 입력되고 출력된다. **그래서 굳이 `decoder`를 순차적인 모델로 만들어야 할 이유는 없다.** 하지만 **이 논문에서 `decoder`에 이러한 컨셉을 잡은 것은, 결과적으로 이 컨셉이 언어 모델에서 더 좋은 결과물을 냈기 때문인 것**으로 생각한다.
