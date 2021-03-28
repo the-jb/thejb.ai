@@ -104,7 +104,7 @@ $$
 
 3. `decoder` self-attention
 
-   `encoder` self-attention 과의 차이점은, `decoder` 의 경우 각 position 에 대해서 해당 position 이전까지만 attention을 적용하기 위해 mask를 사용한다. 그 이유는, **디코더의 컨셉을 RNN처럼 position 별로 순차적으로 출력되는 방향으로 잡았기 때문이다.** 이러한 컨셉 하에서 auto-regressive[^1]한 attention 이 되기 위해서는 뒷 position에 대한 정보가 넘어와서는 안된다. 이에 대해서는 아래 [self-attention masking에 대해서](#self-attention-masking에-대해서)에서 보충 설명한다.
+   `encoder` self-attention 과의 차이점은, `decoder` 의 경우 각 position 에 대해서 해당 position 이전까지만 attention을 적용하기 위해 mask를 사용한다. 그 이유는, **디코더의 컨셉을 RNN처럼 position 별로 순차적으로 출력되는 방향으로 잡았기 때문이다.** 이러한 컨셉 하에서 auto-regressive[^1]한 attention 이 되기 위해서는 뒷 position에 대한 정보가 넘어와서는 안된다. 이에 대해서는 아래 [decoder self-attention masking에 대해서](#decoder-self-attention-masking에-대해서)에서 보충 설명한다.
 
 ### 2-4 .Self-Attention
 
@@ -114,7 +114,7 @@ $$
 
 기존의 Attention 은 단순히 input 의 각 요소들이 output의 각 요소들에게 영향을 주는 정도를 계산하기 위한 용도였다. 하지만 이 논문에서는 **self-attention**이라는 기존 attention과는 또 다른 방법의 attention 활용을 적용하고 있다.
 
-#### self-attention을 사용하는 이유
+#### 2-4.1 self-attention을 사용하는 이유
 
 이 논문에서는 **self-attention**을 사용하는 이유를 설명하기 위해 **long-range dependency** 에 대해 얘기한다. 여기서 **long-range dependency** 란, 문장에서 요소들 사이의 거리가 증가함에 따른 문장의 요소들간의 의존성을 의미한다. 문장의 길이가 길어지면(즉, 요소들간의 거리가 멀어질수록) 각 요소들간의 연결이 떨어질 수밖에 없는데, 이 연결을 유지시켜주는 목적으로 **self-attention**을 사용한다고 한다.
 
@@ -122,13 +122,52 @@ $$
 
 다만, 여기서 레이어의 계산 복잡도도 생각해야 한다. **self-attention**의 레이어 복잡도는 $O(n^2d)$인데, 여기서 문장의 길이 $n$이 너무 길어지면 이 복잡도가 너무 증가하여 계산량이 증가한다. 그래서 문장의 길이가 너무 긴 경우를 위한 **restricted self-attention** 방법도 언급하였다. 일정 길이 $r$만큼 구간을 나누어 **self-attention**을 적용하는 것이다. 이렇게 하면 레이어 복잡도를 $O(rnd)$로 줄일 수 있다. 대신에 path 길이는 $O(n/r)$가 된다.
 
-#### self-attention masking에 대해서
+#### 2-4.2 decoder self-attention masking에 대해서
 
-사실, 결국 Transformer 는 RNN과 다르게 sequence 가 한번에 입력되고 출력된다. **그래서 굳이 `decoder`를 순차적인 모델로 만들어야 할 이유는 없다.** 하지만 **이 논문에서 `decoder`에 이러한 컨셉을 잡은 것은, 결과적으로 이 컨셉이 언어 모델에서 더 좋은 결과물을 냈기 때문인 것**으로 생각한다.
+`decoder`의 input을 자세히 보면, 결국 `decoder` 의 이전 output이 다시 input으로 들어가는 구조가 된다. 이는 실제로는 선형 구조이지만, output을 한번에 뽑아내지 않고 RNN처럼 한 단어의 output을 뽑고, 다시 그 이전 output들과 함께 다음 output을 뽑고 반복하려는 구조이다.
+
+여기서는 다음 두 가지 문제를 살펴봐야 한다.
+
+##### 1. 왜 decoder 를 굳이 순환 output 구조로 만들었나?
+
+사실, 결국 Transformer 는 RNN과 다르게 sequence 가 한번에 입력되고 출력된다. **그래서 굳이 `decoder`를 순차적인 모델로 만들어야 할 이유는 없다.** 하지만 이 논문에서는 **decoder self-attention masking**을 통해서 RNN과 같은 순차적인 모델을 만들려고 하였다.
+
+**이 논문에서 `decoder`에 이러한 컨셉을 잡은 것은, 결과적으로 이 컨셉이 언어 모델에서 더 좋은 결과물을 냈기 때문인 것**으로 생각한다.
 
 이를 사람의 관점에서 개념적으로 생각해보면, **우리가 결국 문장을 만드는 것은, 뒤에 올 단어를 미리 신경써서 만드는 것이 아니라, 보통 앞의 단어들을 이어 나가면서 문장을 만들어 낸다.** 이러한 관점에서 생각해봤을 때, 뒷부분에 대해 masking을 적용시키는 것이 어느정도 타당하다고 느껴진다.
 
 반대로 `encoder` self-attention 이 masking 적용을 안한 이유는, **우리가 문장을 해석하는데 있어서는 문장의 뒷부분을 통해 앞의 단어를 파악하는 등, 단어의 위치에 관계 없이 전체가 다 관계가 얽혀 있기 때문**이라고 이해하면 되겠다.
+
+##### 2. masking 을 왜 적용해야 하나?
+
+**위와 같이 순환구조라고 하더라도, masking 이 들어갈 필요는 없다. 왜냐하면 decoder input에 다음 데이터를 넣지 않으면 뒤의 데이터를 참고할 일이 없기 때문이다.** 여기서는 input만 조정하면 이러한 masking이 들어갈 필요가 없다.
+
+하지만 이러한 masking 을 적용한 이유는, 결국 모델부분보다 구현 부분을 살펴봐야 한다.
+
+구현에서는 decoder input에 output sequence를 전체 한번에 입력시킨다. 결국, 선형 처리가 가능한데도 순환 output구조로 학습을 시키는 것 자체가 비효율적이다. 그래서 decoder input에 output sequence 를 한번에 주고, 거기에 decoder self-attention masking을 통해서 뒷부분에 대해 attention을 계산하지 않게 만드는 것이다.
+
+예를 들어 Inputs(encoder input) 가 `"AAAA"`이고, 이를 번역한 결과가 `"BCDE"`라고 할 때, input과 output에 대해서 다음과 같은 차이가 있다.
+
+- 원래대로라면(순환 구조라면)
+
+  | encoder input | decoder input | output |
+  | ------------- | ------------- | ------ |
+  | "AAAA"        | ""            | "B"    |
+  | "AAAA"        | "B"           | "C"    |
+  | "AAAA"        | "BC"          | "D"    |
+  | "AAAA"        | "BCD"         | "E"    |
+
+  이와 같은 방식으로 한 문장에 4개 데이터를 따로 입력하면 된다. 이런 경우에는 masking을 적용할 필요가 없다.
+
+- 간소화된 구현
+
+  이를 한번에 처리하기 위한 구현으로 논문에서는 다음과 같이 적용한 것이다.
+  
+  | encoder input | decoder input | output |
+| ------------- | ------------- | ------ |
+  | "AAAA"        | "BCD"         | "CDE"  |
+  
+  이와 같이 각 문장에 대해 한번에 처리했기 때문에 뒷부분을 가리는 decoder self-attention masking을 통해서 뒷 단어가 영향을 주지 못하게 만들었다.
 
 ## 3. Position-wise Feed-Forward Networks
 
@@ -158,3 +197,39 @@ $$
 이 논문에서 이렇게 함수를 사용한 이유는 **position의 절대 위치보다 상대위치에 대한 정보를 주고싶었기 때문이다.** 예를 들어 어떤 문장의 앞에 k만큼의 문장이 추가되면, 뒤의 문장들은 k 만큼의 offset으로 이동하게 되는데, 이는 식으로 $PE(pos+k)$ 가 다. **그런데 $PE(pos + k)$ 와 $PE(pos)$는 항상 같다.** 따라서 **절대적인 위치에 영향을 받지 않고 상대적인 위치에 대해서 인코딩하여 값을 넘겨줄 수 있다.**
 
 [^4]: sin과 cos은 결국 위치 이동을 하면 같아지므로 2i 와 2i+1 둘다 sin파 이다.
+
+# 학습 조건
+
+## 정규화
+
+이 논문에서는 다음과 같이 2가지 정규화 요소를 사용했다.
+
+- Dropout
+
+  이 논문에서 dropout 을 크게 두 가지 부분에 적용하였다.
+
+  - 첫 번째로, 각 sub-layer의 output부분에 residual & normalization 을 하기 전에 dropout을 먼저 적용하고 residual connection 을 수행했다.
+
+  - 두 번째로는 각 encoder와 decoder 에서 positional encoding 을 추가한 이후에 encoder input으로 들어가기 직전에 dropout을 수행했다.
+
+  논문에서 dropout 비율 $P_{drop}=0.1$로 설정했다.
+
+- Label Smoothing
+
+  논문에서는 $\epsilon_{ls}=0.1$의 label smoothing을 적용하였다. BLEU 점수에 도움이 되었다고 한다.
+
+## 데이터
+
+논문에서는 WMT2014 의 영어-독일어, 영어-프랑스어 데이터를 사용한 부분에 대해서만 나와있다.
+
+## Optimizer
+
+논문에서는 Adam Optimizer를 $\beta_1=0.9,\beta_2=0.98,\epsilon=10^{-9}$로 적용하였다.
+
+learning rate 는 다음과 같이 적용하였다.
+
+$$
+lrate=d_{model}^{-0.5}min(step^{-0.5},step\times warmup\_steps^{-1.5})
+$$
+여기서 $warmup\_steps=4000$을 사용했다.
+
