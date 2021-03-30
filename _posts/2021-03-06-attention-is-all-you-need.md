@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Attention Is All You Need
-tags: [nlp, transformer, pytorch]
+title: Attention Is All You Need 논문 소개 및 구현
+tags: [implement, nlp, transformer, pytorch]
 ---
 
 # 자료
