@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Graph Neural Networks 개념 총정리 1 - 개요
-tags: [graph, basic knowledge]
+title: Graph Neural Networks 개념정리 1 - 개요
+tags: [graph, basic knowledge, comprehensive gnns]
 ---
 
 # 소개
