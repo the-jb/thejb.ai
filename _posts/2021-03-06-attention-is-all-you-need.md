@@ -241,5 +241,6 @@ learning rate 는 다음과 같이 적용하였다.
 $$
 lrate=d_{model}^{-0.5}min(step^{-0.5},step\times warmup\_steps^{-1.5})
 $$
+
 여기서 $warmup\_steps=4000$을 사용했다.
 

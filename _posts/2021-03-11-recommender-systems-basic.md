@@ -75,6 +75,7 @@ Text-based 컨텐츠에서는 유사한 아이템을 찾기 위해 그 컨텐츠
 
   - **Term Frequency(TF)**는 특정 문서에서 각 키워드가 얼마나 자주 등장하냐를 측정한다.
     $f_{i,j}$를 키워드 $k_i$가 문서 $d_j$에서 가지는 빈도수(frequencey)라 할 때,
+
     $$
     TF_{i,j}=f_{i,j}/max_zf_{z,j} \text{    $f_{i,j}$ : 빈도수   }
     $$
@@ -84,26 +85,28 @@ Text-based 컨텐츠에서는 유사한 아이템을 찾기 위해 그 컨텐츠
   - **Document Frequency(DF)**는 전체 문서에서 해당 키워드가 등장한 문서가 얼마나 많냐를 측정한다.
   
     전체 $N$개의 문서 중에서 키워드 $k_i$가 등장한 문서의 개수를 $n_i$라고 할 때,
-  
+    
     $$
     DF_i = n_i / N
     $$
-  
+    
     따라서 DF 가 높을수록 그 키워드는 어떤 문서든지 자주 등장하기 때문에 키워드로서의 중요성이 낮아진다고 할 수 있다.
     
   - TF 가 높을수록, DF 가 낮을수록 키워드의 중요성(weight)의 값은 증가한다.
     
     따라서 **Inverse Document Frequency(IDF)**는
+    
     $$
     IDF_i = log(1 / DF_i)
     $$
+    
     가 된다. (비율을 일정하게 적용하기 위해 역수에 log 적용)
     
   - 결국, 전체 **TF-IDF** weight 값은 다음과 같다.
   
-  $$
-  w_{i,j} = TF_{i,j}\times IDF_i
-  $$
+    $$
+    w_{i,j} = TF_{i,j}\times IDF_i
+    $$
   
 - 이렇게 구한 **TF-IDF**값을 통해 content 의 keyword의 weight 를 구해서 주요 keyword를 뽑아낼 수 있다.
 
@@ -241,17 +244,16 @@ $$
 두 유저 $x$, $y$ 사이의 공통 아이템들을 $s\in S_{xy}$ 라고 하면, 이 함수로 쓰일 수 있는 식의 대표적인 예는 다음과 같다.
 
 1. **correlation**
+
    $$
    \text{$X=r_{x,s}-r_x, Y=r_{y,s}-r_y$ 라고 하면,}\\
    sim(x,y)=\frac{\sum{XY}}{\sqrt{\sum{X^2}\sum{Y^2}}}
    $$
-   
 2. **코사인 유사도 함수**
+
    $$
    sim(x,y)=\frac{\sum{r_{x,s}r_{y,s}}}{\sqrt{\sum{r_{x,s}^2}\sum{r_{y,s}^2}}}
    $$
-   
-3. 
 
 결국 1번과 2번식의 차이는 평균과의 편차를 기준으로 하냐, 아니면 절대적인 `rating`을 기준으로 하냐의 차이가 된다. 1번 식은 평균보다 많이 좋거나 많이 나쁜 항목들이 유사할 때 유사도가 높고, 2번 식은 좋은 `rating`의 아이템을 비슷하게 평가할수록 유사하다는 것을 나타낸다.
 
@@ -352,10 +354,9 @@ Content-based 와 collaborative 추천을 각각 구현하는 방식이다.
 
 기존의 추천방식을 기반으로 하지 않고, 새로운 모델을 설계하면서 content-based 와 collaborative 방식의 일부 특성들을 적용하는 방법이다.
 
-여러 방식들 중 통계 모델인 Markov chain Monte Carlo 를 이용한 예측 방식이 있다. 이는 쉽게 설명해서, 이전 샘플을 통해 다음 샘플을 예측하는 모델이라고 생각하면 된다. 이에 대한 식은 다음과 같다.
+여러 방식들 중 통계 모델인 Markov chain Monte Carlo 를 이용한 예측 방식이 있다. 이는 쉽게 설명해서, 이전 샘플을 통해 다음 샘플을 예측하는 모델이라고 생각하면 된다. $r_{ij}$를 유저 $i$에 대한 아이템 $j$의 rating이라고 할 때, 이에 대한 식은 다음과 같다.
 
 $$
-\text{$r_{ij}$를 유저 $i$에 대한 아이템 $j$의 rating이라고 하면,}\\
 r_{ij}=x_{ij}\mu+z_i\gamma_j+w_j\lambda_i+e_{ij}\\
 e_{ij} \sim N(0,\sigma^2),\lambda_i \sim N(0,\Lambda),\gamma_j \sim N(0,\Gamma)
 $$

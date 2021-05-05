@@ -50,6 +50,7 @@ $$
 ### Normalized Graph Lapliacian Matrix
 
 Normalized graph Laplacian matrix 는 라플라시안 행렬을 normalize 시켜준 행렬이다. 이는 다음과 같은 식으로 표현된다.
+
 $$
 L=I-D^{-1/2}AD^{-1/2}
 $$
@@ -61,28 +62,37 @@ L_{ii}=1,L_{ij(i\neq j)}=-A_{ij}/\sqrt{degree(i)degree(j)}
 $$
 
 이 normalize 된 라플라시안 행렬은 다음과 같이 분해될 수 있다.
+
 $$
 L=U\Lambda U^T,U=[u_0,u_1..u_{n-1}]\in R^{n\times n}
 $$
+
 여기서 $U$는 각 고유벡터 $u_i$들을 고유값 크기순서로 정렬한 행렬 나타내고, $\Lambda$는 $\Lambda_{ii}=\lambda_i,\Lambda_{ij(i\neq j)}=0$의 값을 갖는 행렬로, 결국 각 행을 $\lambda_i$배 시켜주는 값이라고 생각하면 된다.
 
 그런데, normalized graph Laplacian matrix 의 고유벡터는 서로 직교한다. 즉 다음과 같은 식이 성립하는 것이다.
+
 $$
 U^TU=I
 $$
+
 최종적으로 normalized graph Laplacian matrix인 $L$과, 여기에서 얻을 수 있는 $U$가 바로 spectral-based convolutional GNN 을 구하기 위해 사용된다.
 
 ## 그래프 푸리에 변환
 
 이제 Normalized graph Laplacian Matrix 를 그래프 푸리에 변환에 사용한다. 여기서 푸리에 변환이 등장하는 이유는, 결국 convolution 연산을 푸리에 변환을 통해서 표현한다고 생각하면 된다. 그래프 신호 $\mathrm{x}\in R^n$를 노드의 각 featㄷure 벡터로 정의할 때, 각 원소 $x_i$는 $i$번째 노드의 값을 나타낸다. 이 경우에 그래프 푸리에 변환을 다음과 같이 정의할 수 있다.
+
 $$
 \mathscr{F}(\mathrm{x})=U^T\mathrm{x}
 $$
+
 여기서 $\hat{\mathrm{x}}$를 그래프 푸리에 변환을 사용한 결과라고 할 때, 신호 이 함수의 역함수는 다음과 같다.
+
 $$
 \mathscr{F}^{-1}(\hat{\mathrm{x}})=U\hat{\mathrm{x}}
 $$
+
 그래프 푸리에 변환은 입력 그래프 신호를 normalized graph Laplacian matrix를 통해 고유벡터들의 직교 공간으로 투사된다.  변환된 각 신호 $\hat{\mathrm{x}}$의 원소들은 변환된 공간에서의 위치를 나타낸다. 따라서 입력 신호 $\mathrm{x}$는 다음과 같이 나타낼 수 있다.
+
 $$
 \mathrm{x}=\sum_i\hat{x}_iu_i
 $$
@@ -90,30 +100,38 @@ $$
 ## Graph Convolution
 
 컨볼루션 필터를 $g\in R^n$라고 할 때, 그래프 컨볼루션 식은 다음과 같다.
+
 $$
 \mathrm{x}*_Gg=\mathscr{F}^{-1}(\mathscr{F}(\mathrm{x})\odot\mathscr{F}(g))\\
 =U(U^T\mathrm{x}\odot U^Tg)
 $$
+
 여기서 $\odot$ 기호는 element-wise 곱셈, 즉 행렬에서 동일 위치에 있는 원소의 곱을 나타내고, $*_G$ 기호는 순환 합성곱인데, 그래프에서의 convolution 정도로 이해하면 
 
 ## Sepctral Graph Convolution
 
 여기서 각 convolution filter 를 $g_\theta=diag(U^Tg)$라고 하면, spectral graph convolution 을 다음과 같이 정의할 수 있다.
+
 $$
 \mathrm{x}*_Gg_\theta=Ug_\theta U^T\mathrm{x}
 $$
+
 Spectral-based Convolutional GNN 은 위의 정의로부터 시작된다. 여기서 필터 $g_\theta$를 어떻게 선택하냐가 중요하다.
 
 ### 1. Spectral Convolutional Neural Network (Spectral CNN)
 
 Spectral CNN 은 convolution 필터 $g_\theta$에 대해 다음과 같은 식을 사용한다.
+
 $$
 g_\theta=\Theta_{i,j}^{(k)}
 $$
+
 이는 여러 채널에서의 학습 파라매터들을 나타낸다. 각 Graph Convolutional Layer 는 다음과 같이 정의된다.
+
 $$
 H_{i,j}^{(k)}=\sigma(\sum_{i=1}^{f_{k-1}}U\Theta_{i,j}^{(k)}U^TH_{:,i}^{(k-1)}) (j=1,2,..f_k)
 $$
+
 이 식의 구조에 대해서 설명하자면 다음과 같다.
 
 - $k$는 해당 레이어 $H$의 인덱스를 나타낸다.
@@ -130,29 +148,33 @@ Spectral Convolutional Neural Network 는 다음과 같은 3가지 한계점이 
 2. 각 필터들은 domain dependent 하다. 즉 그래프의 구조가 달라지면 적용할 수 없다.
 3. 고유값 분해를 계산하기 위한 복잡도가 높다.
 
-
-
 이러한 단점을 보완하기 위해 ChebNet, 그리고 그래프에서 널리 활용되는 GCN이 등장하게 된다. GCN은 ChebNet 에서 발전된 이론이다. 따라서 GCN을 이해하기 위해 먼저 ChebNet에 대해 살펴보도록 한다.
 
 ### 2. Chebyshev Spectral Convolutional Neural Network (ChebNet)
 
 위에서 필터 $g_\theta$를 단순한 대각행렬로 구성했다면, ChebNet 은 필터를 Chebyshev 다항식으로 다음과 같이 표현한 것이다.
+
 $$
 g_\theta=\sum_{i=0}^K\theta_iT_i(\tilde\Lambda)
 $$
+
 여기서 $\tilde\Lambda$는 $[-1,1]$ 사이의 값으로, $\tilde\Lambda=2\Lambda/\lambda_{max}-I$이다.
 
 이 필터의 핵심인 Chebyshev 다항식 $T_i(x)$는 다음과 같이 재귀적으로 정의된다.
+
 $$
 T_i(x)=2xT_{i-1}(x)-T_{i-2}(x)\\
 T_0(x)=1,T_1(x)=x
 $$
+
 여기서 $\tilde L=2L/\lambda_{max}-I$를 사용하면, 귀납법으로 $T_i(\tilde L)=UT_i(\tilde\Lambda)U^T$가 되는 것을 증명할 수 있다. 이를 적용하면 최종적인 식은 다음과 같이 된다.
+
 $$
 \mathrm{x}*_Gg_\theta=Ug_\theta U^T\mathrm{x}\\
 =U(\sum_{i=0}^K\theta_iT_i(\tilde\Lambda))U^T\mathrm{x}\\
 =\sum_{i=0}^K\theta_iT_i(\tilde L)\mathrm{x}
 $$
+
 위의 Spectral CNN 보다 발전된 점은, 필터들이 Chebyshev 다항식으로 정의되었다는 것이다. 이를 통해 필터들이 local feature 를 독립적으로 추출할 수 있다. 논문에서는 이를 더 일반화시킨 CayleyNet 에 대한 내용도 나오지만, 이는 방향이 다르기 때문에 생략한다.
 
 이 ChebNet은 결국 다항식을 활용하는데, 다항식이라는 것은 우리가 아는 딥러닝과 거리가 멀다. 우리가 알고 있는 딥러닝은 선형 뉴런들이 모여 레이어를 이루고 있기 때문이다. 따라서 이를 우리가 아는 선형의 convolution filter 를 활용하는 방식으로 변형시킨 것이 바로 GCN이다.
@@ -160,22 +182,30 @@ $$
 ### 3. Graph Convolutional Network (GCN)
 
 GCN은 선형 필터를 적용하기 위해 위 ChebNet 을 1차 근사를 적용한 것이다. 위의 식에서 $K=1,\lambda_{max}=2$를 적용하면 다음과 같은 식으로 간소화시킬 수 있다.
+
 $$
 \mathrm{x}*_Gg_\theta=Ug_\theta U^T\mathrm{x}\\
 =\theta_0\mathrm{x}-\theta_1D^{-1/2}AD^{-1/2}\mathrm{x}
 $$
+
 GCN은 이 식에서 over-fitting 을 방지하기 위해 파라매터를 $\theta_0=-\theta_1=\theta$로 만들어 줄였다. 이를 적용하면 위 식을 다음과 같이 쓸 수 있다.
+
 $$
 \mathrm{x}*_Gg_\theta=\theta(I+D^{-1/2}AD^{-1/2})\mathrm{x}
 $$
+
 이 식이 바로 GCN의 Graph Convolution 식이 된다. 여기에 입력과 출력을 멀티채널의 형태로 만들면 최종적으로 다음과 같은 식이 된다.
+
 $$
 H=X*_Gg_\Theta=f(\bar AX\Theta)
 $$
+
 여기서 $\bar A=I+D^{-1/2}AD^{-1/2}$이고, $f$는 activaion 함수이다. 그런데 GCN 논문에서는 이 $\bar A$식을 그대로 사용하게 되면 학습의 안정성이 떨어지고, 다음과 같이 normalization 을 활용해서 $\bar A$값을 구하는 것이 더 안정적으로 학습이 진행되어 아래 식을 사용한다고 한다.
+
 $$
 \bar A=\tilde D^{-1/2}\tilde A\tilde D^{-1/2}\\
 (\tilde A=A+I,\tilde D_{i,i}=\sum_j\tilde A_{i,j})
 $$
+
 GCN 을 spatial-based 관점에서도 사용할수도 있는데, 이에 대해서는 다음 포스트에서 다시 다루도록 한다. 이 GCN을 확장한 개념으로 AGCN(Adaptive GCN), DGCN(Dual GCN) 등이 있다.
 
