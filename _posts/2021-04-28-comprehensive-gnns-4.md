@@ -28,8 +28,7 @@ $$
 
 ## GCN (Spatial-based)
 
-[이전 포스트](/comprehensive-gnn-3)의 spectral-based 에서 소개한 GCN 을 spatial-based 식으로 다음과 같이 나타낼 수 있다.
-
+[이전의 spectral-based 포스트](/comprehensive-gnn-3)에서 소개한 GCN 을 spatial-based 식으로 다음과 같이 나타낼 수 있다.
 $$
 h_v=f(\Theta^T(\sum_{u\in N(v)\cup v}\bar A_{vu}X_u)), \forall v\in V
 $$
@@ -40,9 +39,7 @@ $$
 H^{(k)}=f(\sum_{i=1}^{k-1}\bar AH^{(k-1)}\Theta^{(k)})
 $$
 
-NN4G 와의 주요 차이점 중 하나는, NN4G는 그냥 인접행렬 $A$를 사용하는 반면, GCN에서는 위에서 유도했던 $\bar A$를 사용한다는 점이다. 이를 통해 여러 다른 scale의 노드들이 normalize 될 수 있다.
-
-이 논문에서는 GCN에 대해 그리 자세히 설명되어있지 않다. 따라서 [GCN 논문에 대한 자세한 내용과 구현에 대한 포스팅](/gcn)을 추가로 진행할 예정이다.
+NN4G 와의 주요 차이점 중 하나는, NN4G는 그냥 인접행렬 $A$를 사용하는 반면, GCN에서는 위에서 유도했던 $\bar A$를 사용한다는 점이다. 이를 통해 여러 다른 scale의 노드들이 normalize 될 수 있었고, 좋은 결과를 얻게 되었다. 자세한 내용은 [GCN 포스팅](/gcn)에서 확인할 수 있다.
 
 논문에서는 DCNN, DGC, PGC-DGCNN 등 NN4G로부터 개선된 여러 갈래의 논문들의 소개된다. 이러한 논문들이 주로 해결하고자 했던 것은 바로 노드 사이의 거리 문제이다. 노드 사이의 거리가 너무 멀면 해당 노드 사이의 관련이 적어지게 되는데, 이로부터 발생되는 문제들과 해결책을 제시하고 있다. 하지만 이 내용들을 전부 다루지는 않고, 중요한 내용 위주로 소개를 하겠다.
 

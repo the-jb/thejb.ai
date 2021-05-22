@@ -207,5 +207,5 @@ $$
 (\tilde A=A+I,\tilde D_{i,i}=\sum_j\tilde A_{i,j})
 $$
 
-GCN 을 spatial-based 관점에서도 사용할수도 있는데, 이에 대해서는 다음 포스트에서 다시 다루도록 한다. 이 GCN을 확장한 개념으로 AGCN(Adaptive GCN), DGCN(Dual GCN) 등이 있다.
+이 GCN은 spectral-based 이론으로부터 도출되었지만, 이 결과가 바로 spatial-based 가 되었다. 즉, GCN을 통해서 spatial-based 이론이 정립되었다고 할 수 있다. 이에 대해서는 [다음 포스트](/comprehensive-gnns-4)에서 다시 다루도록 한다. 또한, [GCN 논문 리뷰](/gcn)에서도 이에 대한 내용을 확인할 수 있다. 이 GCN을 확장한 개념으로 AGCN(Adaptive GCN), DGCN(Dual GCN) 등이 있다.
 
