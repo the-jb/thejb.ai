@@ -119,7 +119,7 @@ $$
 
 여기서 $\vert\vert$는 concat 연산자, 즉 행렬들을 나란히 합치는 것을 나타낸다. 이렇게 합쳐진 행렬에 대해 $a^T$를 곱해주는 것이다. 그리고 $a$가 바로 이 attention 의 학습 파라매터가 되며, GAT에서는 activation function 으로 LeakyReLU로 고정하여 정의했다는 것을 알 수 있다. 이를 통해 최종적으로 $\alpha_{vu}^{(k)}$는 $u$의 hidden state들에 대해서 $v$가 영향을 받는 정도에 대한 값을 갖는데, softmax를 사용했기 때문에 이 기여도의 총합은 항상 1이 된다. 
 
-또한 GAT에서는 transformer 의 multi-head attention 또한 적용하였다. GAT 에 대한 자세한 내용도 추후에 다루도록 하겠다.
+또한 GAT에서는 transformer 의 multi-head attention 또한 적용하였다. GAT 에 대한 자세한 내용은 [Graph Attention Networks 포스팅](/gat)을 참고하면 된다.
 
 결과적으로, GAT는 transformer 모델을 적용하면서 GraphSAGE 에 비해서 node classification 작업에서 놀라운 성능 향상을 보여주었다고 한다. 이에 따라 GAT에서 발전시킨 논문으로 **Gated Attention Network(GaAN)**이 있는데, 이 논문은 transformer 의 self-attention 부분까지 적용시켜주면서 성능을 향상시켰다.
 
