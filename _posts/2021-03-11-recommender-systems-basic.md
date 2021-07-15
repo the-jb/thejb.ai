@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Recommender Systems의 기초
-tags: [recommender system, basic knowledge]
+title: 추천시스템의 기초
+tags: [개념, 논문, Recommender]
 ---
 
 # 참고 논문 및 자료
@@ -10,8 +10,8 @@ tags: [recommender system, basic knowledge]
 
 # Recommendation Problem
 
-## 1. Recommandation Problem 이란?
-고전 추천 시스템은 **Collaborative Filtering** 을 필두로 하여 연구가 본격화되면서 발전하였다. 추천 시스템을  **Recommandation Problem**으로 정의하고 이 문제를 해결해 나가는 방식에 대해 다룬다.
+## 1. Recommendation Problem 이란?
+고전 추천 시스템은 **Collaborative Filtering** 을 필두로 하여 연구가 본격화되면서 발전하였다. 추천 시스템을  **Recommendation Problem**으로 정의하고 이 문제를 해결해 나가는 방식에 대해 다룬다.
 
 가장 일반적으로 Recommendation Problem 은 아이템에 대한 유저의 `rating`을 추정하는 것이라고 할 수 있다.
 
@@ -19,7 +19,7 @@ tags: [recommender system, basic knowledge]
 1. 그 유저의 다른 아이템에 대한 `rating`값
 2. 다른 유저의 그 아이템에 대한 `rating`값이다.
 
-## 2. 수식을 통해 Recommandation Problem 구체화
+## 2. 수식을 통해 Recommendation Problem 구체화
 Recommendation Problem 을 식으로 구체화하여 정의하면 다음과 같다.
 
 $$
@@ -42,7 +42,7 @@ u 함수에 대해 `extrapolate` 하는 것은 주로 1) 휴리스틱하게 함�
 
 [^1]: 두 점 바깥의 값을 예측. 여기서는 이전 데이터들로 앞으로의 데이터를 추측한다는 의미로 보면 됨 (참고. interpolate : 두 점 사이의 값을 예측)
 [^2]: 함수의 performance 를 추정할 수 있는 식. 예를 들어서 MSE(Mean Square Error) 
-## 3. Recommandation Problem 해결 방법의 종류
+## 3. Recommendation Problem 해결 방법의 종류
 
 결국 아직 정해지지 않은 `rating`값을 추측하는 방법이 바로 핵심이 된다. 이에 대해서는 다음과 같은 방법들이 가장 기본적인 접근 방법이다.
 

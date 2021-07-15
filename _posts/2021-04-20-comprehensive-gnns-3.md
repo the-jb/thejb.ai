@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Graph Neural Networks 개념정리 3 - Convolutional GNN (1) Spectral-based ConvGNN
-tags: [graph, basic knowledge, comprehensive gnns]
+tags: [개념, 논문, Graph]
 ---
 
 # 소개

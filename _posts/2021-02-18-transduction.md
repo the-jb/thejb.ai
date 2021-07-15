@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Transduction 이란?
-tags: [terms, basic knowledge]
+title: Transduction
+tags: [개념]
 ---
 
 **Transduction** 에 대응하는 적절한 한글 단어가 존재하지 않는다. 사전을 검색하면 "형질 도입", "변환" 정도의 뜻만 나온다. 왜 딥러닝에서 **transduction** 이라는 단어가 등장하고 사용되는지 나름대로 정리해 보았다.

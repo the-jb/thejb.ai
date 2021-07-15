@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Attention Is All You Need 논문 소개 및 구현
-tags: [implement, nlp, transformer, pytorch]
+title: Attention Is All You Need
+tags: [논문, 구현, NLP, PyTorch, Transformer]
 ---
 
 # 자료
@@ -174,7 +174,7 @@ $$
   이를 한번에 처리하기 위한 구현으로 논문에서는 다음과 같이 적용한 것이다.
   
   | encoder input | decoder input | output |
-| ------------- | ------------- | ------ |
+  | ------------- | ------------- | ------ |
   | "AAAA"        | "BCD"         | "CDE"  |
   
   이와 같이 각 문장에 대해 한번에 처리했기 때문에 뒷부분을 가리는 decoder self-attention masking을 통해서 뒷 단어가 영향을 주지 못하게 만들었다.
