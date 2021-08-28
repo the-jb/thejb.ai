@@ -103,7 +103,7 @@ $$
 
 ## Graph Attention Network (GAT)
 
-Spatial-based 방식들 중에서 가장 핵심적으로 알아야 할 논문이 바로 이 GAT이다. GAT에서는 이웃 노드의 관여를 기여도 관점에서 바라보고 있다. 기여도란, 이웃 노드의 hidden representation 이 해당 노드에 얼마나 영향을 주는지를 나타내는 값이다. 예를 들면 기존의 GCN은 이 기여도를 $\bar A$를 계산해서 사용한다. GraphSAGE 의 경우, 샘플링을 통해서 기여도가 0 혹은 1이 될 것이다.
+GAT에서는 이웃 노드의 관여를 기여도 관점에서 바라보고 있다. 기여도란, 이웃 노드의 hidden representation 이 해당 노드에 얼마나 영향을 주는지를 나타내는 값이다. 예를 들면 기존의 GCN은 이 기여도를 $\bar A$를 계산해서 사용한다. GraphSAGE 의 경우, 샘플링을 통해서 기여도가 0 혹은 1이 될 것이다.
 
 GCN이나 GraphSAGE 같은 방식은 결국, 미리 기여도를 구해놓고 학습에 사용한다. 하지만 GAT는 이 기여도를 고정시키는 것이 아니라, Transformer 모델의 [attention](/attention-is-all-you-need)을 통해 학습 파라매터로 동작하도록 한다. 구체적인 식은 다음과 같다.
 
@@ -123,7 +123,7 @@ $$
 
 결과적으로, GAT는 transformer 모델을 적용하면서 GraphSAGE 에 비해서 node classification 작업에서 놀라운 성능 향상을 보여주었다고 한다. 이에 따라 GAT에서 발전시킨 논문으로 **Gated Attention Network(GaAN)**이 있는데, 이 논문은 transformer 의 self-attention 부분까지 적용시켜주면서 성능을 향상시켰다.
 
-논문에서는 GAT 외에도 많은 spatial-based 논문들에 대해 소개하고 있으나, 결국 우리가 필요한 부분은 그래프에서 주로 다뤄지고 있는 GAT까지만 이해하면 된다고 생각하기 때문에 나머지 소개는 다루지 않는다.
+논문에서는 GAT 외에도 많은 spatial-based 논문들에 대해 소개하고 있으나, 나머지 소개는 다루지 않는다.
 
 # Spectral-based 와 Spatial-based 모델의 비교
 
@@ -143,4 +143,4 @@ Spectral-based는 기존의 그래프 신호처리 이론으로부터 발전하�
 
 # 결론
 
-결국 현재 그래프에서 중요한 이론은 spatial-based 에 기반한 이론이다. Spatial-based 모델은 여러 방법들 중에서 GCN을 베이스로 한 많은 연구들이 진행되었고, 그 이후에 GAT를 통해서 노드의 attention을 다루는 것이 주류가 된 것으로 이해하면 된다.
+결국 현재 그래프에서 중요한 이론은 spatial-based 에 기반한 이론이다. Spatial-based 모델은 여러 방법들 중에서 GCN을 베이스로 한 많은 연구들이 진행되었고, 그 이후에 GAT 등 노드의 attention을 transformer 구조를 통해서 다루게 된다.
