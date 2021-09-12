@@ -1,0 +1,34 @@
+name: THEJB.AI
+author: JB
+description: "JB의 AI 논문 구현 및 리뷰"
+
+url: https://thejb.ai
+
+img_baseurl: "https://img.thejb.ai"
+
+permalink: /:title/
+
+kramdown:
+  input: GFM
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  hard_wrap: true
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: ''
+    # line_numbers: true
+    default_lang: python
+    guess_lang: true
+
+remote_theme: "the-jb/thejb.ai-theme"
+
+sass:
+  style: :compressed
+
+gems:
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
