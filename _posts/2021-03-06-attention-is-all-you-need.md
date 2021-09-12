@@ -27,9 +27,9 @@ tags: [논문, 구현, NLP, PyTorch, Transformer]
 - `encoder` 는 $x$ 를 $z$ 로 매핑하는 역할을 한다.
 - `decoder` 는 $z$를 통해서 $y$를 생성시키는 역할을 한다.
 
-- 각 step 에서 모델은 *auto-regressive*[^1]하고, 이전에 생성된 symbol 을 다음 input에 활용한다.
+- 각 step 에서 모델은 *auto-regressive*[^1]하게 이전에 생성된 symbol 을 다음 input에 활용한다.
 
-[^1]: 자기 자신이 입력이자 출력인 모델
+[^1]: 자기 자신의 출력을 다음 입력으로 사용해서 재귀적으로 output이 나오는 모델.
 
 아래에서 이에 대해 하나씩 살펴보도록 한다.
 
