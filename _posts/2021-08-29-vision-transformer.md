@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "ViT: An Image is Worth 16x16 Words - Transformers for Image Recognition at Scale"
 tags: [논문, Vision, Transformer]
 ---

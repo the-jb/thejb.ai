@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Graph Neural Networks 개념정리 4 - Convolutional GNN (2) Spatial-based ConvGNN
 tags: [개념, 논문, Graph]
 ---

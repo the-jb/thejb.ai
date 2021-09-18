@@ -21,6 +21,20 @@ kramdown:
 
 remote_theme: "the-jb/thejb.ai-theme"
 
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
 sass:
   style: :compressed
 

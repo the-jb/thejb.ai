@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Transduction
 tags: [개념]
 ---

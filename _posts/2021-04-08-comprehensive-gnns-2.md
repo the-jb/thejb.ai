@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Graph Neural Networks 개념정리 2 - Recurrent GNN
 tags: [개념, 논문, Graph]
 ---

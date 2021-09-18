@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 추천시스템의 기초
 tags: [개념, 논문, Recommender]
 ---
