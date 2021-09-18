@@ -234,13 +234,16 @@ $$
 
 ## Optimizer
 
-논문에서는 Adam Optimizer를 $\beta_1=0.9,\beta_2=0.98,\epsilon=10^{-9}$로 적용하였다.
-
-learning rate 는 다음과 같이 적용하였다.
+논문에서는 Adam Optimizer를 사용하였고, 파라매터는 다음과 같다.
 
 $$
-lrate=d_{model}^{-0.5}min(step^{-0.5},step\times warmup\_steps^{-1.5})
+\beta_1=0.9,\beta_2=0.98,\epsilon=10^{-9}
 $$
 
-여기서 $warmup\_steps=4000$을 사용했다.
+또한, learning rate 와 warmup steps는 다음과 같이 적용하였다.
+
+$$
+lrate=d_{model}^{-0.5}min(step^{-0.5},step\times warmup\_steps^{-1.5})\\
+warmup\_steps=4000
+$$
 
