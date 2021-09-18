@@ -56,5 +56,5 @@ giscus:
   data_mapping: "og:title"
   data_reactions_enabled: "0"
   data_emit_metadata: "0"
-  data_theme: "light"
+  data_theme: "https://thejb.ai/assets/css/giscus.css"
   crossorigin: "anonymous"
