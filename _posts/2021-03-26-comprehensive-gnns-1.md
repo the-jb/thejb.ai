@@ -3,13 +3,11 @@ title: Graph Neural Networks 개념정리 1 - 개요
 tags: [개념, 논문, Graph]
 ---
 
-# 소개
-
 기존에 Graph 개념을 충분히 알고 있고, 알고리즘을 통해 많이 활용해봤지만 Graph Neural Networks 에 대한 개념을 잡기가 쉽지 않았다. 처음 접근할 때 가장 어려웠던 점은 "대체 그래프에서 왜 딥 러닝이 필요한가?"에 대한 감을 잡는 것이었다. 이미지, 언어 등의 분야는 인식, 분석하고자 하는 대상이 명확하다. 하지만 그래프는 그냥 연결 관계 그 자체이다. 그래프를 왜 굳이 딥 러닝으로 인식하려고 하는 것인지, 이를 통해서 어떤 것을 얻을 수 있는지 직관적으로 떠올리기 어려웠다. 결국에 이미지나 언어 등과 달리, 그래프는 목적과 수단이 매우 다양하고 폭넓은 데이터에 적용하는 수단이었다.
 
 이 포스트에서는 GNN에 대한 전반적인 이론들에 대해 어느정도 깊이 있게 이해하기 위해 위 "A Comprehensive Survey on Graph Neural Networks" 라는 survey 논문을 타겟으로 삼았다. 하지만 논문을 그대로 해석하는 것이 아니라 GNN에 대한 이해 측면에 중점을 두어 나름대로 주관적인 해석과 설명을 붙이고, 내용들을 참고하여 여러가지 그래프 문제들과 그 것을 해결하기 위한 다양한 방법들을 어떤 식으로 구분하고 분류했는지 살펴보고자 한다.
 
-# 참고 논문
+**참고 논문**
 
 - [Z. Wu, S. Pan, F. Chen, G. Long, C. Zhang, Philip S. Yu, "A Comprehensive Survey on Graph Neural Networks"](https://arxiv.org/abs/1901.00596)
 
@@ -74,7 +72,7 @@ GNN 과 비슷하게 graph kernel은 그래프나 노드를 mapping function 을
 
 이 논문에서는 Graph Neural Networks 를 다음과 같이 4개의 카테고리로 분류하는 방법을 제시했다. 각 카테고리에 대한 간단한 개념과 목적은 다음과 같다. 이후 포스트에서 각 모델에 대한 자세한 내용을 다뤄볼 것이다.
 
-### 1. Recurrent Graph Neural Networks(RecGNNs)
+### Recurrent Graph Neural Networks(RecGNNs)
 
 Graph Neural Networks 가 recurrent 모델로부터 출발하였다. 그래프 자체가 시작과 끝이 있는 것이 아닌, 순환 구조이기 때문에 이 구조를 recurrent 모델을 통해 표현하고자 한 것으로 생각된다.
 
@@ -82,17 +80,17 @@ RecGNN은 노드 표현을 RNN으로 학습하고자 하는 것에 중점을 둔
 
 RecGNN은 다음에 등장하는 ConvGNN에 많은 영향을 주었다는 점에서 의미가 있다. 특히 이 메시지 패싱이라는 아이디어는 spatial-based convolutional GNN 에서도 이어졌다.
 
-### 2. Convolutional Graph Neural Networks(ConvGNNs)
+### Convolutional Graph Neural Networks(ConvGNNs)
 
 ConvGNN 은 convolution 이라는 연산을 일반 grid data 가 아닌, 그래프 데이터에 적용하는 방법을 정립하였다. ConvGNN 의 핵심 아이디어는 바로 노드 $v$를 그 노드의 feature인 $x_v$와 이웃 노드의 feature인 $x_u,u\in N(v)$를 aggregate 하여 표현했다는 점이다. RecGNN과 다른 점은 ConvGNN은 여러개의 graph convolutional layer 를 쌓아서 노드를 고차원으로 표현했다는 점이다.
 
 ConvGNN 은 여러 종류의 GNN 모델을 설계할 때 가장 중심적으로 사용된다. 예를 들어, graph convolution 사이에 ReLU 를 두어 node classification 모델을 만들 수도 있고, convolution 을 계속 pooling 하여 softmax 를 적용하면 graph classification 모델이 된다.
 
-### 3. Graph Autoencoders(GAEs)
+### Graph Autoencoders(GAEs)
 
 GAE 는 노드나 그래프를 인코딩하고 다시 복원하는 과정에서 latent vector 를 얻는 비지도 학습이다. GAE는 네트워크 임베딩과 graph generative distributions 를 학습하기 위한 용도로 사용된다. 네트워크 임베딩에서 GAE는 latent node representation 을 학습한다. 
 
-### 4. Spatial-temporal Graph Neural Networks(STGNNs)
+### Spatial-temporal Graph Neural Networks(STGNNs)
 
 Spatial-temporal(공간적-시간적) 그래프의 숨겨진 패턴들을 학습하기 위한 네트워크다. 교통량 예측, 사람 동작 인식, 운전 행동 예측 등 다양한 분야에서 중요한 요소가 되고 있다. STGNNs의 핵심 아이디어는 공간적인 의존성과 시간적인 의존성을 동시에 고려하는 것이다. 현재 많은 접근방식들은 graph convolution을 통해 공간적 의존성을, RNN이나 CNN을 통해 시간적 의존성을 가져가는 방식을 사용하고 있다.
 

@@ -117,7 +117,7 @@ $$
 
 Spectral-based Convolutional GNN 은 위의 정의로부터 시작된다. 여기서 필터 $g_\theta$를 어떻게 선택하냐가 중요하다.
 
-### 1. Spectral Convolutional Neural Network (Spectral CNN)
+### Spectral Convolutional Neural Network (Spectral CNN)
 
 Spectral CNN 은 convolution 필터 $g_\theta$에 대해 다음과 같은 식을 사용한다.
 
@@ -149,7 +149,7 @@ Spectral Convolutional Neural Network 는 다음과 같은 3가지 한계점이 
 
 이러한 단점을 보완하기 위해 ChebNet, 그리고 그래프에서 널리 활용되는 GCN이 등장하게 된다. GCN은 ChebNet 에서 발전된 이론이다. 따라서 GCN을 이해하기 위해 먼저 ChebNet에 대해 살펴보도록 한다.
 
-### 2. Chebyshev Spectral Convolutional Neural Network (ChebNet)
+### Chebyshev Spectral Convolutional Neural Network (ChebNet)
 
 위에서 필터 $g_\theta$를 단순한 대각행렬로 구성했다면, ChebNet 은 필터를 Chebyshev 다항식으로 다음과 같이 표현한 것이다.
 
@@ -178,7 +178,7 @@ $$
 
 이 ChebNet은 결국 다항식을 활용하는데, 다항식이라는 것은 우리가 아는 딥러닝과 거리가 멀다. 우리가 알고 있는 딥러닝은 선형 뉴런들이 모여 레이어를 이루고 있기 때문이다. 따라서 이를 우리가 아는 선형의 convolution filter 를 활용하는 방식으로 변형시킨 것이 바로 GCN이다.
 
-### 3. Graph Convolutional Network (GCN)
+### Graph Convolutional Network (GCN)
 
 GCN은 선형 필터를 적용하기 위해 위 ChebNet 을 1차 근사를 적용한 것이다. 위의 식에서 $K=1,\lambda_{max}=2$를 적용하면 다음과 같은 식으로 간소화시킬 수 있다.
 

@@ -3,13 +3,13 @@ title: 추천시스템의 기초
 tags: [개념, 논문, Recommender]
 ---
 
-# 참고 논문 및 자료
+참고 논문 및 자료
 
 - G. Adomavicius and A. Tuzhilin, "Toward the Next Generation of Recommender Systems: A Survey of the State-of-the-Art and Possible Extensions"
 
 # Recommendation Problem
 
-## 1. Recommendation Problem 이란?
+## Recommendation Problem 이란?
 고전 추천 시스템은 **Collaborative Filtering** 을 필두로 하여 연구가 본격화되면서 발전하였다. 추천 시스템을  **Recommendation Problem**으로 정의하고 이 문제를 해결해 나가는 방식에 대해 다룬다.
 
 가장 일반적으로 Recommendation Problem 은 아이템에 대한 유저의 `rating`을 추정하는 것이라고 할 수 있다.
@@ -18,7 +18,7 @@ tags: [개념, 논문, Recommender]
 1. 그 유저의 다른 아이템에 대한 `rating`값
 2. 다른 유저의 그 아이템에 대한 `rating`값이다.
 
-## 2. 수식을 통해 Recommendation Problem 구체화
+## 수식을 통해 Recommendation Problem 구체화
 Recommendation Problem 을 식으로 구체화하여 정의하면 다음과 같다.
 
 $$
@@ -41,7 +41,7 @@ u 함수에 대해 `extrapolate` 하는 것은 주로 1) 휴리스틱하게 함�
 
 [^1]: 두 점 바깥의 값을 예측. 여기서는 이전 데이터들로 앞으로의 데이터를 추측한다는 의미로 보면 됨 (참고. interpolate : 두 점 사이의 값을 예측)
 [^2]: 함수의 performance 를 추정할 수 있는 식. 예를 들어서 MSE(Mean Square Error) 
-## 3. Recommendation Problem 해결 방법의 종류
+## Recommendation Problem 해결 방법의 종류
 
 결국 아직 정해지지 않은 `rating`값을 추측하는 방법이 바로 핵심이 된다. 이에 대해서는 다음과 같은 방법들이 가장 기본적인 접근 방법이다.
 
@@ -327,13 +327,13 @@ Content-based 방식과 collaborative 방식 모두 다른 한계점이 있었�
 
 각각의 방법들에 대해 아래에서 설명하도록 한다.
 
-## 1. 두 방식을 각각 구현
+## 두 방식을 각각 구현
 
 Content-based 와 collaborative 추천을 각각 구현하는 방식이다.
 
 각 구현을 통한 추천 결과들을 합하여 순서대로 보여준다. 아니면, 순서대로 보여주는 대신에 두가지의 추천 결과 중 하나를 선택해서 보여주는 방법도 있다. 해당 상황에 따라서 각 추천방식의 quality를 측정하고, quality 가 더 높은 추천 결과를 보여주는 것이다. 이 quality 를 해당 상황의 기존 추천 결과를 통해서 학습할 수 있다.
 
-## 2. Collaborative 기반에 content-based 의 특성 적용
+## Collaborative 기반에 content-based 의 특성 적용
 
 기존의 collaborative 추천 방식에 content-based의 일부 특성들을 적용하는 방식이다. 
 
@@ -343,13 +343,13 @@ Content-based 와 collaborative 추천을 각각 구현하는 방식이다.
 
 이 외에 유저의 rating 값들을 content-based 방식을 통해 다른 아이템들에게로 확장 적용하는 방법 등이 있다.
 
-## 3. Content-based 기반에 collaborative 의 특성 적용
+## Content-based 기반에 collaborative 의 특성 적용
 
 2와 반대로 content-based 를 기반으로 collaborative 의 특성을 일부 적용하는 방식이다.
 
 대표적으로 dimensionality reduction 방법이 있다. 이는 content 분석을 할 때, 각각의 유저가 아닌 어떤 그룹의 content-based profile 을 만드는 것이다.
 
-## 4. 새로운 모델 설계
+## 새로운 모델 설계
 
 기존의 추천방식을 기반으로 하지 않고, 새로운 모델을 설계하면서 content-based 와 collaborative 방식의 일부 특성들을 적용하는 방법이다.
 

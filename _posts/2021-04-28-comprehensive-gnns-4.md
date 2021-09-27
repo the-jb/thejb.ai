@@ -124,7 +124,7 @@ $$
 
 논문에서는 GAT 외에도 많은 spatial-based 논문들에 대해 소개하고 있으나, 나머지 소개는 다루지 않는다.
 
-# Spectral-based 와 Spatial-based 모델의 비교
+# Spectral-based와 Spatial-based 모델의 비교
 
 Spectral-based는 기존의 그래프 신호처리 이론으로부터 발전하였고, 여기에서 GCN또한 등장하였다는 점에서 의미를 갖는다. 하지만 결국 현재는 spatial-based 모델이 sepctral-based 보다 더 선호되는데, 그 이유는 다음과 같다.
 

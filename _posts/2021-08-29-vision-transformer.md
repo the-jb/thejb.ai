@@ -3,11 +3,9 @@ title: "ViT: An Image is Worth 16x16 Words - Transformers for Image Recognition 
 tags: [논문, Vision, Transformer]
 ---
 
-# 소개
-
 이 논문은 비젼분야의 논문인데, BERT와 관련 자료를 찾던 도중, 재미있는 아이디어의 논문이어서 가져오게 되었다. 이 논문에서 제시하는 모델은 Vision Transformer (ViT) 라고 부르는데, 이름에서도 알 수 있듯이 [transformer](/attention-is-all-you-need)의 모델을 비젼분야에 도입한 것이다. 비젼 분야에 transformer나 attention 관련 아이디어를 도입한 논문은 많았지만, 결국 CNN기반의 성능을 쉽게 넘을 수 없었는데 ViT는 많은 SOTA를 갱신한 모델이다. 또한 아이디어 자체가 매우 간단하면서도 transformer의 장점을 효과적으로 이용했다고 생각한다. 내용 자체는 매우 간단하기 때문에 모델에 대해 간략히만 설명하도록 한다.
 
-# 모델
+# ViT 모델
 
 먼저 transformer의 인코더를 떠올려보면, 이는 결국 여러 입력 토큰들을 임베딩시키고, 이 토큰간의 관계(attention)를 transformer 구조를 통해서 파악해서, 관계를 파악한 최종적인 임베딩 값이 나오게 된다. 그리고 그 임베딩값을 이용해서 태스크를 수행하는 것이다.
 
@@ -19,7 +17,7 @@ tags: [논문, Vision, Transformer]
 
 ViT모델은 결국 patch를 통해서 이미지를 언어 문장처럼 임베딩 크기가 늘어나고, 개수가 줄어든 토큰으로 바꾸었다고 할 수 있다.
 
-### Positional Embedding
+## Positional Embedding
 
 논문에서는 Positional Embedding에 대해서 4가지 실험을 진행했다.
 
@@ -32,15 +30,15 @@ ViT모델은 결국 patch를 통해서 이미지를 언어 문장처럼 임베�
 
 이 부분을 생각해보면, 애초에 positional embedding 값 자체가 sinusoid를 통해 거리에 따른 상대적인 위치값이 표현되는 형태이기 때문에 큰 영향이 없는것도 이해할 수 있다. 입력이 이미지라는 점을 생각해보면, 조금만 회전시켜도 아래쪽에 위치하던 것이 오른쪽으로 옮겨갈 수도 있다. 그러기에 자세한 위치정보를 줘도 굳이 도움이 되지 않는다고 해석할 수 있겠다. 그래도 위치정보자체는 어느정도 주어야 한다는 점을 실험결과로 파악할 수 있었다.
 
-### Patch Embedding
+## Patch Embedding
 
 각 patch는 결국 $16\times16\times3$의 값을 갖게 되는데, 이를 linear projection을 통해 transformer 인코더의 latent vector 크기 $D$를 맞추어 주었다. 또한, 마지막에 classification을 위해서 BERT의 `[CLS]`토큰 아이디어를 활용해서 패치 임베딩뿐만 아니라 CLS Embedding도 넣어주었다. 이 CLS 임베딩에도 BERT와 마찬가지로 Positional Embedding 값이 들어가게 된다.
 
-### Inductive Bias
+## Inductive Bias
 
 Inductive bias란, 간단히 얘기하면 모델에서 입력 데이터의 특성을 미리 가정해서 제약을 걸어놓는 것을 의미한다. 이 논문에서는 CNN에 비해서 image-specific한 inductive bias를 훨씬 '덜' 사용했다고 얘기하고 있다. CNN은 기본적으로 locality, 즉 이미지에서 가까이 있을수록 관계가 있다는 전제가 기반이 되는데, ViT에서는 patch 이후로는 self-attention이 글로벌하게 적용되고 있기 때문에 CNN과 같은 bias가 많이 활용되지 않고 있다고 할 수 있다. 처음 패치를 구분지을 때만 local한 레이어가 사용된다.
 
-### Hybrid Architecture
+## Hybrid Architecture
 
 이미지에 대한 각 patch의 임베딩을 구할 때, raw image로부터 바로 선형변환을 했다. Hybrid Architecture는 선형변환 대신에 CNN을 활용하는 것을 말한다. CNN을 통해서 $D$차원만큼의 채널을 펼친다. CNN에 Pooling이 들어가기 때문에 결국 feature map 크기 자체가 작아지게 된다. 따라서 $1\times1$의 패치를 사용한다. 논문에서는 ResNet50 기반으로 Hybrid 구조를 적용했다.
 
