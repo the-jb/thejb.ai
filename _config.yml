@@ -48,13 +48,3 @@ exclude:
   - CNAME
 
 giscus:
-  src: "https://giscus.app/client.js"
-  data_repo: "the-jb/thejb.ai"
-  data_repo_id: "MDEwOlJlcG9zaXRvcnkyMjY3NTQ5MDk="
-  data_category: "Posts"
-  data_category_id: "DIC_kwDODYQBXc4B_CDg"
-  data_mapping: "og:title"
-  data_reactions_enabled: "0"
-  data_emit_metadata: "0"
-  data_theme: "https://thejb.ai/assets/css/giscus.css"
-  crossorigin: "anonymous"
