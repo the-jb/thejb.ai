@@ -3,11 +3,11 @@ title: Transduction
 tags: [개념]
 ---
 
-Transduction에 대한 포스팅을 이전에 작성했는데, 다시 읽어보니 사족을 너무 많이 붙여서 오히려 개념 이해에 방해가 되는 느낌이었다. Transduction, 혹은 transductive learning이라고 불리는 이 개념은 그렇게 어려운 개념이 아니다. 하지만 이를 번역하는 적절한 한글명이 없어서 처음 개념을 잡을 때 혼란스러울 수 있다. 쓸데없는 설명들을 많이 삭제하고, 개념을 이해할 수 있는 위주로 포스팅을 다시 정리한다.
+AI 논문에서 사용하는 transduction 이라는 용어는 다음과 같은 경우들에 따라 전혀 다른 뜻을 갖고 있다. 이는 transduction 이 사용된 주제가 무엇인지를 파악하는 것이 중요하다.
 
-# Transduction의 정의
+# Transductive Learning
 
-**Transduction** 에 대한 설명은 많지만, 정확한 개념 자체를 정의한 것은 거의 찾기 어려웠다. [Wiki](https://en.wikipedia.org/wiki/Transduction_(machine_learning))에서만 **transduction**에 대해 다음과 같이 정의되어 있었다.
+학습 방법론이나 머신 러닝에서의 일반적 해결 방법에 대해서 얘기할 때의 transduction은 induction 과 상반되는 **추론** 방법을 의미한다. 이에 대한 정의는 [Wiki](https://en.wikipedia.org/wiki/Transduction_(machine_learning))에 나와있다.
 
 > **transduction** or **transductive inference** is reasoning from observed, specific (training) cases to specific (test) cases. In contrast, **induction** is reasoning from observed training cases to general rules, which are then applied to the test cases.
 > 이를 해석하면, **induction**은 training case 에서 일반적인 규칙을 찾아서 test case에 적용을 하는 추론을 하는 반면에 **transduction**은 training, test 케이스 모두 관찰하여 추론이 이루어진다는 뜻이다.
@@ -16,11 +16,11 @@ Transduction에 대한 포스팅을 이전에 작성했는데, 다시 읽어보�
 
 하지만 이러한 설명으로는 와닿지 않고, 막연한 느낌이 든다. 여기에서 여러가지 의문들이 생길 수 있다. 다음에서 이러한 의문들에 대해 살펴보고 해결해 나가면서 **transduction**의 개념에 더 가까이 접근할 수 있다.
 
-# Transduction 이해하기
+## Transductive learning 의 의미 이해하기
 
 다음과 같은 질문들을 통해 **transudction**에 대한 개념을 이해해 보도록 한다.
 
-## 데이터를 학습용으로 사용하면 transduction일까?
+### 데이터를 학습용으로 사용하면 transduction일까?
 
 딥러닝에서 일반적으로 데이터 파일을 split 하여 일정 비율(예: 70% 학습, 30% 검증)로 사용한다. 위 설명을 보면 그냥 **transduction**을 데이터 100% 학습의 개념으로 오해할 수 있다. 하지만 결론은 "아니다" 이다.
 
@@ -30,7 +30,7 @@ Transduction에 대한 포스팅을 이전에 작성했는데, 다시 읽어보�
 
 여기서 굵은 글씨의 문장이 핵심이 된다. 즉, **문제를 풀 때 induction은 일반화를 시키고서 문제에 대한 답을 풀지만, transduction은 일반화 과정이 없이 바로 답을 취한다**는 얘기다.
 
-## 일반화가 없는 딥러닝이란?
+### 일반화가 없는 딥러닝이란?
 
 위에서 **transduction**은 일반화 과정이 없다고 했다. 그런데 보통 일반화란, 결국 결과물로 어떤 모델을 만들어놓게 된다. 그런데 딥러닝에서 모델을 안만든다는 것이 무슨 의미인지 혼란스럽게 다가올 수 있다.
 
@@ -44,7 +44,7 @@ Transduction에 대한 포스팅을 이전에 작성했는데, 다시 읽어보�
 
 추천 시스템도 대부분 **transduction** 문제라고 할 수 있다. 일반적인 추천모델을 설계할 필요가 없는 것이다. 특정 분야, 상품, 회사에 맞는 고유한 추천모델을 설계하고 풀면 된다. 추천 시스템은 특히 도메인 지식이 많이 활용되기 때문에 어차피 모든 상품들에 대해서 잘 추천해주는 일반화 모델을 만들어내기 어렵다. 결국 우리 회사에서만 잘 돌아가는 추천 모델을 구성하면 되는 것이다.
 
-## 일반적인 딥러닝 모델로 transduction을 푼다면?
+### 일반적인 딥러닝 모델로 transduction을 푼다면?
 
 위에서는 내 데이터셋에서만 돌아가는 모델을 만들어서 문제를 푼다고 했다. 하지만 많은 논문에서 **transduction**이나 **transductive learning**에 대해서 언급하고 이에 대한 모델을 제시한다. **Transudction**인데, 모델로 여러가지 문제를 푸는 논문에서 의문을 느낄 수가 있다.
 
@@ -52,9 +52,9 @@ Transduction에 대한 포스팅을 이전에 작성했는데, 다시 읽어보�
 
 딥러닝에서 **transduction**보다 **transductive learning**이라는 표현을 더 많이 쓰는 이유가 바로 이 것이다. 대부분 모델의 구조보다, 그 모델의 학습을 설계하는 관점에서 **transductive** 와 **inductive**가 구분되기 때문이다.
 
-# 결론
+## 결론
 
-이 포스팅의 이전 버젼에서는 너무 모델측면의 설명에 집중한 나머지, 쓸데없이 비약과 사족들을 많이 넣게 되었다. 하지만 애초에 **transduction**을 데이터셋의 관점에서 바라보면 매우 간단하다. 특정 데이터셋 내에서만 문제를 해결하는 모델을 학습시키는 것이 **transductive learning** 인 것이다.
+**Transduction**을 데이터셋의 관점에서 바라보면 매우 간단하다. 특정 데이터셋 내에서만 문제를 해결하는 모델을 학습시키는 것이 **transductive learning** 인 것이다.
 
 기존에는 레이블로 예시를 들어서 **supervised**와 **unsupervised** 관점과 비교가 필요했다. 하지만 데이터셋 관점에서 보면 간단하게 이를 구분할 수 있다.
 
@@ -63,3 +63,12 @@ Transduction에 대한 포스팅을 이전에 작성했는데, 다시 읽어보�
   즉, 데이터셋 안의 내용은 **transduction/induction**과 전혀 상관이 없는 것이다.
 
 결국 **모델을 학습시키는 목적이 무엇이냐**를 생각해본다면, 딥러닝에서의 **transduction**과 **induction**을 쉽게 구분할 수 있을 것이다.
+
+# (Sequence) Transduction
+
+흔히 자연어 처리에서 seq2seq (sequence-to-sequence) 을 얘기할 때도 **transduction** 용어가 사용한다. 이 경우의 transduction 은 transduce, 변환을 의미한다. 번역 등과 같이 주어진 sequence 를 다른 형태의 sequence 로 변환시키는 태스크에 대한 일반적인 내용을 얘기할 때 주로 사용된다. 많이 사용되는 seq2seq 은 엄밀히 얘기할 때는 sequence transduction 의 한 가지 방법이라고 할 수 있다. 이 때의 seq2seq 은 입력 sequence 의 각 토큰들을 인코더-디코더 구조를 통해서 출력 토큰을 생성해 내는 방법적인 부분을 이야기한다.
+
+결국 대부분의 NLP 의 sequence transduction 문제들이 seq2seq 방식을 사용하기 때문에, 결과적으로 seq2seq 용어를 써도 큰 차이가 없는 경우가 많다. 하지만 [BERT](/bert)나 XLNet 등에서 나오는 auto encoder나 auto regressive 같은 내용들에서는 분명히 둘의 개념에는 차이가 있다. Sequence transduction은 입력 sequence를 다른 형태의 출력 sequence 로 변환시키는 것이다. 따라서 auto encoder 와 같이 입력과 출력 sequence 의 성질이 같은 경우에는 tranduction 이라는 말을 사용하지 않는다.
+
+Transducer 는 어떤 신호를 다른 신호로 변환시키는 도구라는 뜻이다. 따라서 NLP를 제외하고 다른 분야에서도 음성 등 어떤 신호를 다른 형태의 출력물로 변환시킬 때는 transduction 이라는 용어를 사용한다.
+
