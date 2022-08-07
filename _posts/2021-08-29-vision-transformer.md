@@ -3,7 +3,7 @@ title: "ViT: An Image is Worth 16x16 Words - Transformers for Image Recognition 
 tags: [논문, Vision, Transformer]
 ---
 
-이 논문은 비젼분야의 논문인데, BERT와 관련 자료를 찾던 도중, 재미있는 아이디어의 논문이어서 가져오게 되었다. 이 논문에서 제시하는 모델은 Vision Transformer (ViT) 라고 부르는데, 이름에서도 알 수 있듯이 [transformer](/attention-is-all-you-need)의 모델을 비젼분야에 도입한 것이다. 비젼 분야에 transformer나 attention 관련 아이디어를 도입한 논문은 많았지만, 결국 CNN기반의 성능을 쉽게 넘을 수 없었는데 ViT는 많은 SOTA를 갱신한 모델이다. 또한 아이디어 자체가 매우 간단하면서도 transformer의 장점을 효과적으로 이용했다고 생각한다. 내용 자체는 매우 간단하기 때문에 모델에 대해 간략히만 설명하도록 한다.
+이 논문은 비젼분야의 논문인데, transformer와 관련이 있어 포스팅한다. 이 논문에서 제시하는 모델은 Vision Transformer (ViT) 라고 부르는데, 이름에서도 알 수 있듯이 [transformer](/attention-is-all-you-need)의 모델을 비젼분야에 도입한 것이다. 비젼 분야에 transformer나 attention 관련 아이디어를 도입한 논문은 많았지만, 결국 CNN기반의 성능을 쉽게 넘을 수 없었는데 ViT는 많은 SOTA를 갱신한 모델이다. 또한 아이디어 자체가 매우 간단하면서도 transformer의 장점을 효과적으로 이용했다고 생각한다. 내용 자체는 매우 간단하기 때문에 모델에 대해 간략히만 설명하도록 한다.
 
 # ViT 모델
 
