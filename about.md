@@ -1,18 +1,18 @@
 ---
 layout: page
-title: JB
+title: JB. Kim
 permalink: /about/
 ---
 
-# Current Interests
+# Interests
 
-- NLP
-- Deep Learning
+- Deep Neural Architecture
+- Natural language with cognitive linguistics
 
 # Experiences
 
-- Current Yonsei University, Seoul, Master of Artificial Intelligence
-- '17~'19 Developer of Samsung Electronics
+- Sep '21 ~ Aug '23 Master of Artificial Intelligence, Theory of Computation Lab, Yonsei University
+- Feb '17 ~ Aug '19 S/W Engineer, Samsung Electronics
 
 # Links
 
