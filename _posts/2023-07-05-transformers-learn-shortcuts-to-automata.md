@@ -207,9 +207,9 @@ Transformer의 어텐션은 global하게 토큰들이 영향을 줄 수 있는 �
 
 그러면 도대체 오토마타와 무슨 관련이 있는 것인가?
 
-예를 들어, 입력이 $\Sigma = \{ \sigma_1, \sigma_2 \}$ 두 가지인 어떤 오토마타 $A$가 있다고 하자.
+예를 들어, 입력이 $\Sigma = \lbrace \sigma_1, \sigma_2 \rbrace$ 두 가지인 어떤 오토마타 $A$가 있다고 하자.
 포인트는 입력이 한번이 아니라, 여러번 들어올 수 있는 것이다.
-입력이 2번 들어온다면 $\{ \sigma_1\sigma_1, \sigma_1\sigma_2, \sigma_2\sigma_1, \sigma_2\sigma_2 \}$ 이러한 입력이 들어올 것이다.
+입력이 2번 들어온다면 $\lbrace \sigma_1\sigma_1, \sigma_1\sigma_2, \sigma_2\sigma_1, \sigma_2\sigma_2 \rbrace$ 이러한 입력이 들어올 것이다.
 여기서 이 문자열들을  하나의 "입력"으로 보고, $A$와 똑같이 작동하는 오토마타 $A'$를 만드는 것이다.
 
 우리는 $A$를 알고 있으니, 위의 입력들이 어떠한 상태(state)에 도달하는지도 알 수 있다.
@@ -270,7 +270,7 @@ Flip-Flop은 1비트만을 저장하거나 불러왔지만, Transformer를 통�
 따라서 입력은, $Q$종류의 쓰기 입력과, 불러오기($\perp$) 종류가 있다. 즉,
 
 $$
-\Sigma = Q \cup \{\perp \}, \delta(q, \perp)=q, \delta(q, \sigma\in Q)=\sigma
+\Sigma = Q \cup \lbrace\perp \rbrace, \delta(q, \perp)=q, \delta(q, \sigma\in Q)=\sigma
 $$
 
 가 성립하는 모듈을 만들어야 한다.
