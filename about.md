@@ -2,8 +2,8 @@
 layout: page
 title: JB
 permalink: /about/
+desc: is a dedicated AI researcher who delves deeply into understanding neural architectures modeled on human innate systems.
 ---
-is a dedicated AI researcher who delves deeply into understanding neural architectures modeled on human innate systems.
 
 # Research Interests
 
