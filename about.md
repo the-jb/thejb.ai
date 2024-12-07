@@ -22,7 +22,7 @@ desc: is a dedicated AI researcher who delves deeply into understanding neural a
 
 # Experience
 
-- AI Researcher, Tanalysis. *Nov '23 ~ Present*
+- AI Researcher, Tanalysis. *Nov '23 ~ Dec '24*
 - Master of Artificial Intelligence, Theory of Computation Lab, Yonsei University. *Sep '21 ~ Aug '23*
 - S/W Engineer, Samsung Electronics. *Feb '17 ~ Aug '19*
 
