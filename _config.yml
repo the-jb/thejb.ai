@@ -18,7 +18,7 @@ kramdown:
     default_lang: python
     guess_lang: true
 
-remote_theme: "the-jb/thejb.ai-theme"
+remote_theme: "the-jb/pages-theme"
 
 defaults:
   -
